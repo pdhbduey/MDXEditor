@@ -133,11 +133,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="ErrorCodes.h" />
+    <ClInclude Include="HostMessages.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PcrProtocol.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StreamingObj.h" />
+    <ClInclude Include="SysStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
@@ -162,6 +168,19 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyForm.resx">
+      <DependentUpon>MyForm.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Users\Nikola Ostojic\Desktop\Projects\AmpDetectDLL\AmpDetectDLL.vcxproj">
+      <Project>{d89ab9d7-8745-4a97-b4ac-d0906f89e522}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Users\Nikola Ostojic\Desktop\Projects\MixingStationDLL\MixingStationDLL.vcxproj">
+      <Project>{62477c5b-65b4-423b-8ea8-afe52ababede}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
