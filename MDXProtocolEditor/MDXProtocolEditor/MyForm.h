@@ -8,8 +8,7 @@
 #include <fstream>
 #include <msclr\marshal.h>
 
-#include "PcrProtocol.h"
-#include "StreamingObj.h"
+#include "AmpDetect.h"
 
 using namespace System::IO::Ports;
 using namespace msclr::interop;
@@ -113,9 +112,9 @@ namespace MDXProtocolEditor {
 	private: System::Windows::Forms::GroupBox^  groupBox2;
 	private: System::Windows::Forms::Button^  DeleteStep;
 	private: System::Windows::Forms::Button^  NewStep;
-	private: System::Windows::Forms::Button^  OpenProtocol;
 
-	private: System::Windows::Forms::RichTextBox^  ProtocolName;
+
+
 
 	private: System::Windows::Forms::DataGridView^  ProtocolDataGrid;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Cycles;
@@ -125,7 +124,7 @@ namespace MDXProtocolEditor {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  RampRate;
 	private: System::Windows::Forms::DataGridViewCheckBoxColumn^  OpticalAcq;
 	private: System::Windows::Forms::DataGridViewCheckBoxColumn^  Melt;
-	private: System::Windows::Forms::Button^  SaveProtocol;
+
 	private: System::Windows::Forms::SaveFileDialog^  saveProtocolDlg;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::Button^  DelOptReadBtn;
@@ -143,6 +142,15 @@ namespace MDXProtocolEditor {
 	private: System::Windows::Forms::Timer^  StatusTimer;
 	private: System::Windows::Forms::FolderBrowserDialog^  SelectDataFolderDlg;
 	private: System::Windows::Forms::OpenFileDialog^  openProtocolDlg;
+	private: System::Windows::Forms::MenuStrip^  menuStrip1;
+	private: System::Windows::Forms::MenuStrip^  menuStrip2;
+	private: System::Windows::Forms::ToolStripMenuItem^  fileMenuDropdown;
+	private: System::Windows::Forms::ToolStripMenuItem^  openProtocolDropdown;
+	private: System::Windows::Forms::ToolStripMenuItem^  saveProtocolDropdown;
+	private: System::Windows::Forms::RichTextBox^  ProtocolName;
+
+
+
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -160,6 +168,8 @@ namespace MDXProtocolEditor {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->ProtocolTabs = (gcnew System::Windows::Forms::TabControl());
+			this->SamplePrepPage = (gcnew System::Windows::Forms::TabPage());
+			this->MixingStationPage = (gcnew System::Windows::Forms::TabPage());
 			this->AmpDetectPage = (gcnew System::Windows::Forms::TabPage());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->DelOptReadBtn = (gcnew System::Windows::Forms::Button());
@@ -174,7 +184,6 @@ namespace MDXProtocolEditor {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->OpticsTypeCombo = (gcnew System::Windows::Forms::ComboBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->SaveProtocol = (gcnew System::Windows::Forms::Button());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->ProtocolDataGrid = (gcnew System::Windows::Forms::DataGridView());
 			this->Cycles = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -186,20 +195,23 @@ namespace MDXProtocolEditor {
 			this->Melt = (gcnew System::Windows::Forms::DataGridViewCheckBoxColumn());
 			this->DeleteStep = (gcnew System::Windows::Forms::Button());
 			this->NewStep = (gcnew System::Windows::Forms::Button());
-			this->OpenProtocol = (gcnew System::Windows::Forms::Button());
 			this->ProtocolName = (gcnew System::Windows::Forms::RichTextBox());
-			this->MixingStationPage = (gcnew System::Windows::Forms::TabPage());
-			this->SamplePrepPage = (gcnew System::Windows::Forms::TabPage());
 			this->saveProtocolDlg = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->StatusTimer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SelectDataFolderDlg = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->openProtocolDlg = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
+			this->fileMenuDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->ProtocolTabs->SuspendLayout();
 			this->AmpDetectPage->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->OpticalReadsGrid))->BeginInit();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ProtocolDataGrid))->BeginInit();
+			this->menuStrip2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// ProtocolTabs
@@ -207,24 +219,47 @@ namespace MDXProtocolEditor {
 			this->ProtocolTabs->Controls->Add(this->SamplePrepPage);
 			this->ProtocolTabs->Controls->Add(this->MixingStationPage);
 			this->ProtocolTabs->Controls->Add(this->AmpDetectPage);
-			this->ProtocolTabs->Location = System::Drawing::Point(13, 13);
+			this->ProtocolTabs->Location = System::Drawing::Point(9, 39);
+			this->ProtocolTabs->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->ProtocolTabs->Name = L"ProtocolTabs";
 			this->ProtocolTabs->SelectedIndex = 0;
-			this->ProtocolTabs->Size = System::Drawing::Size(1192, 787);
+			this->ProtocolTabs->Size = System::Drawing::Size(894, 639);
 			this->ProtocolTabs->TabIndex = 0;
+			this->ProtocolTabs->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::ProtocolTabs_TabIndexChanged);
+			this->ProtocolTabs->TabIndexChanged += gcnew System::EventHandler(this, &MyForm::ProtocolTabs_TabIndexChanged);
+			// 
+			// SamplePrepPage
+			// 
+			this->SamplePrepPage->Location = System::Drawing::Point(4, 22);
+			this->SamplePrepPage->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->SamplePrepPage->Name = L"SamplePrepPage";
+			this->SamplePrepPage->Size = System::Drawing::Size(886, 613);
+			this->SamplePrepPage->TabIndex = 2;
+			this->SamplePrepPage->Text = L"Sample Prep";
+			this->SamplePrepPage->UseVisualStyleBackColor = true;
+			// 
+			// MixingStationPage
+			// 
+			this->MixingStationPage->Location = System::Drawing::Point(4, 22);
+			this->MixingStationPage->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->MixingStationPage->Name = L"MixingStationPage";
+			this->MixingStationPage->Padding = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->MixingStationPage->Size = System::Drawing::Size(886, 613);
+			this->MixingStationPage->TabIndex = 1;
+			this->MixingStationPage->Text = L"Mixing Station";
+			this->MixingStationPage->UseVisualStyleBackColor = true;
 			// 
 			// AmpDetectPage
 			// 
 			this->AmpDetectPage->BackColor = System::Drawing::Color::Transparent;
 			this->AmpDetectPage->Controls->Add(this->groupBox1);
-			this->AmpDetectPage->Controls->Add(this->SaveProtocol);
 			this->AmpDetectPage->Controls->Add(this->groupBox2);
-			this->AmpDetectPage->Controls->Add(this->OpenProtocol);
 			this->AmpDetectPage->Controls->Add(this->ProtocolName);
-			this->AmpDetectPage->Location = System::Drawing::Point(4, 25);
+			this->AmpDetectPage->Location = System::Drawing::Point(4, 22);
+			this->AmpDetectPage->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->AmpDetectPage->Name = L"AmpDetectPage";
-			this->AmpDetectPage->Padding = System::Windows::Forms::Padding(3);
-			this->AmpDetectPage->Size = System::Drawing::Size(1184, 758);
+			this->AmpDetectPage->Padding = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->AmpDetectPage->Size = System::Drawing::Size(886, 613);
 			this->AmpDetectPage->TabIndex = 0;
 			this->AmpDetectPage->Text = L"Amp Detect";
 			// 
@@ -236,21 +271,19 @@ namespace MDXProtocolEditor {
 			this->groupBox1->Controls->Add(this->label7);
 			this->groupBox1->Controls->Add(this->OpticsTypeCombo);
 			this->groupBox1->Controls->Add(this->label6);
-			this->groupBox1->Location = System::Drawing::Point(7, 504);
-			this->groupBox1->Margin = System::Windows::Forms::Padding(4);
+			this->groupBox1->Location = System::Drawing::Point(2, 352);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Padding = System::Windows::Forms::Padding(4);
-			this->groupBox1->Size = System::Drawing::Size(1157, 262);
+			this->groupBox1->Size = System::Drawing::Size(874, 223);
 			this->groupBox1->TabIndex = 11;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Optics";
 			// 
 			// DelOptReadBtn
 			// 
-			this->DelOptReadBtn->Location = System::Drawing::Point(51, 151);
-			this->DelOptReadBtn->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->DelOptReadBtn->Location = System::Drawing::Point(9, 110);
+			this->DelOptReadBtn->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->DelOptReadBtn->Name = L"DelOptReadBtn";
-			this->DelOptReadBtn->Size = System::Drawing::Size(160, 28);
+			this->DelOptReadBtn->Size = System::Drawing::Size(128, 23);
 			this->DelOptReadBtn->TabIndex = 11;
 			this->DelOptReadBtn->Text = L"Delete";
 			this->DelOptReadBtn->UseVisualStyleBackColor = true;
@@ -258,10 +291,10 @@ namespace MDXProtocolEditor {
 			// 
 			// AddOptReadBtn
 			// 
-			this->AddOptReadBtn->Location = System::Drawing::Point(51, 103);
-			this->AddOptReadBtn->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->AddOptReadBtn->Location = System::Drawing::Point(9, 83);
+			this->AddOptReadBtn->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->AddOptReadBtn->Name = L"AddOptReadBtn";
-			this->AddOptReadBtn->Size = System::Drawing::Size(160, 28);
+			this->AddOptReadBtn->Size = System::Drawing::Size(128, 23);
 			this->AddOptReadBtn->TabIndex = 10;
 			this->AddOptReadBtn->Text = L"Add";
 			this->AddOptReadBtn->UseVisualStyleBackColor = true;
@@ -281,11 +314,11 @@ namespace MDXProtocolEditor {
 				this->LEDIndex,
 					this->LedIntensity, this->LedStabilizationTime, this->DetectorIndex, this->RefDetectorIndex, this->DetectorIntegrationTime
 			});
-			this->OpticalReadsGrid->Location = System::Drawing::Point(233, 54);
-			this->OpticalReadsGrid->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->OpticalReadsGrid->Location = System::Drawing::Point(175, 44);
+			this->OpticalReadsGrid->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->OpticalReadsGrid->Name = L"OpticalReadsGrid";
 			this->OpticalReadsGrid->RowTemplate->Height = 24;
-			this->OpticalReadsGrid->Size = System::Drawing::Size(757, 186);
+			this->OpticalReadsGrid->Size = System::Drawing::Size(694, 179);
 			this->OpticalReadsGrid->TabIndex = 3;
 			// 
 			// LEDIndex
@@ -325,10 +358,9 @@ namespace MDXProtocolEditor {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(229, 34);
-			this->label7->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->label7->Location = System::Drawing::Point(172, 28);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(96, 17);
+			this->label7->Size = System::Drawing::Size(72, 13);
 			this->label7->TabIndex = 2;
 			this->label7->Text = L"Optical reads:";
 			// 
@@ -336,32 +368,19 @@ namespace MDXProtocolEditor {
 			// 
 			this->OpticsTypeCombo->FormattingEnabled = true;
 			this->OpticsTypeCombo->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Photodiode", L"Camera" });
-			this->OpticsTypeCombo->Location = System::Drawing::Point(12, 54);
-			this->OpticsTypeCombo->Margin = System::Windows::Forms::Padding(4);
+			this->OpticsTypeCombo->Location = System::Drawing::Point(9, 44);
 			this->OpticsTypeCombo->Name = L"OpticsTypeCombo";
-			this->OpticsTypeCombo->Size = System::Drawing::Size(197, 24);
+			this->OpticsTypeCombo->Size = System::Drawing::Size(128, 21);
 			this->OpticsTypeCombo->TabIndex = 1;
 			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(8, 34);
-			this->label6->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->label6->Location = System::Drawing::Point(6, 28);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(44, 17);
+			this->label6->Size = System::Drawing::Size(34, 13);
 			this->label6->TabIndex = 0;
 			this->label6->Text = L"Type:";
-			// 
-			// SaveProtocol
-			// 
-			this->SaveProtocol->Location = System::Drawing::Point(988, 21);
-			this->SaveProtocol->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->SaveProtocol->Name = L"SaveProtocol";
-			this->SaveProtocol->Size = System::Drawing::Size(160, 28);
-			this->SaveProtocol->TabIndex = 10;
-			this->SaveProtocol->Text = L"Save Protocol";
-			this->SaveProtocol->UseVisualStyleBackColor = true;
-			this->SaveProtocol->Click += gcnew System::EventHandler(this, &MyForm::SaveProtocol_Click);
 			// 
 			// groupBox2
 			// 
@@ -370,11 +389,9 @@ namespace MDXProtocolEditor {
 			this->groupBox2->Controls->Add(this->ProtocolDataGrid);
 			this->groupBox2->Controls->Add(this->DeleteStep);
 			this->groupBox2->Controls->Add(this->NewStep);
-			this->groupBox2->Location = System::Drawing::Point(7, 89);
-			this->groupBox2->Margin = System::Windows::Forms::Padding(4);
+			this->groupBox2->Location = System::Drawing::Point(3, 3);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Padding = System::Windows::Forms::Padding(4);
-			this->groupBox2->Size = System::Drawing::Size(1164, 430);
+			this->groupBox2->Size = System::Drawing::Size(873, 351);
 			this->groupBox2->TabIndex = 10;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Thermal Profile";
@@ -392,11 +409,11 @@ namespace MDXProtocolEditor {
 				this->Cycles,
 					this->Steps, this->Setpoint, this->Time, this->RampRate, this->OpticalAcq, this->Melt
 			});
-			this->ProtocolDataGrid->Location = System::Drawing::Point(21, 88);
-			this->ProtocolDataGrid->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->ProtocolDataGrid->Location = System::Drawing::Point(16, 72);
+			this->ProtocolDataGrid->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->ProtocolDataGrid->Name = L"ProtocolDataGrid";
 			this->ProtocolDataGrid->RowTemplate->Height = 24;
-			this->ProtocolDataGrid->Size = System::Drawing::Size(1136, 321);
+			this->ProtocolDataGrid->Size = System::Drawing::Size(852, 261);
 			this->ProtocolDataGrid->TabIndex = 9;
 			// 
 			// Cycles
@@ -406,7 +423,7 @@ namespace MDXProtocolEditor {
 			this->Cycles->Name = L"Cycles";
 			this->Cycles->Resizable = System::Windows::Forms::DataGridViewTriState::False;
 			this->Cycles->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->Cycles->Width = 55;
+			this->Cycles->Width = 44;
 			// 
 			// Steps
 			// 
@@ -416,7 +433,7 @@ namespace MDXProtocolEditor {
 			this->Steps->ReadOnly = true;
 			this->Steps->Resizable = System::Windows::Forms::DataGridViewTriState::False;
 			this->Steps->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->Steps->Width = 43;
+			this->Steps->Width = 35;
 			// 
 			// Setpoint
 			// 
@@ -425,7 +442,7 @@ namespace MDXProtocolEditor {
 			this->Setpoint->Name = L"Setpoint";
 			this->Setpoint->Resizable = System::Windows::Forms::DataGridViewTriState::False;
 			this->Setpoint->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->Setpoint->Width = 89;
+			this->Setpoint->Width = 68;
 			// 
 			// Time
 			// 
@@ -434,7 +451,7 @@ namespace MDXProtocolEditor {
 			this->Time->Name = L"Time";
 			this->Time->Resizable = System::Windows::Forms::DataGridViewTriState::False;
 			this->Time->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->Time->Width = 66;
+			this->Time->Width = 50;
 			// 
 			// RampRate
 			// 
@@ -443,7 +460,7 @@ namespace MDXProtocolEditor {
 			this->RampRate->Name = L"RampRate";
 			this->RampRate->Resizable = System::Windows::Forms::DataGridViewTriState::False;
 			this->RampRate->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->RampRate->Width = 85;
+			this->RampRate->Width = 67;
 			// 
 			// OpticalAcq
 			// 
@@ -451,7 +468,7 @@ namespace MDXProtocolEditor {
 			this->OpticalAcq->HeaderText = L"Optical Read";
 			this->OpticalAcq->Name = L"OpticalAcq";
 			this->OpticalAcq->Resizable = System::Windows::Forms::DataGridViewTriState::False;
-			this->OpticalAcq->Width = 96;
+			this->OpticalAcq->Width = 75;
 			// 
 			// Melt
 			// 
@@ -462,10 +479,10 @@ namespace MDXProtocolEditor {
 			// 
 			// DeleteStep
 			// 
-			this->DeleteStep->Location = System::Drawing::Point(187, 42);
-			this->DeleteStep->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->DeleteStep->Location = System::Drawing::Point(140, 34);
+			this->DeleteStep->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->DeleteStep->Name = L"DeleteStep";
-			this->DeleteStep->Size = System::Drawing::Size(160, 28);
+			this->DeleteStep->Size = System::Drawing::Size(120, 23);
 			this->DeleteStep->TabIndex = 8;
 			this->DeleteStep->Text = L"Delete Step";
 			this->DeleteStep->UseVisualStyleBackColor = true;
@@ -473,62 +490,86 @@ namespace MDXProtocolEditor {
 			// 
 			// NewStep
 			// 
-			this->NewStep->Location = System::Drawing::Point(21, 42);
-			this->NewStep->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->NewStep->Location = System::Drawing::Point(16, 34);
+			this->NewStep->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->NewStep->Name = L"NewStep";
-			this->NewStep->Size = System::Drawing::Size(160, 28);
+			this->NewStep->Size = System::Drawing::Size(120, 23);
 			this->NewStep->TabIndex = 7;
 			this->NewStep->Text = L"New Step";
 			this->NewStep->UseVisualStyleBackColor = true;
 			this->NewStep->Click += gcnew System::EventHandler(this, &MyForm::NewStep_Click);
 			// 
-			// OpenProtocol
-			// 
-			this->OpenProtocol->Location = System::Drawing::Point(300, 20);
-			this->OpenProtocol->Name = L"OpenProtocol";
-			this->OpenProtocol->Size = System::Drawing::Size(56, 31);
-			this->OpenProtocol->TabIndex = 1;
-			this->OpenProtocol->Text = L"...";
-			this->OpenProtocol->UseVisualStyleBackColor = true;
-			this->OpenProtocol->Click += gcnew System::EventHandler(this, &MyForm::OpenProtocol_Click);
-			// 
 			// ProtocolName
 			// 
-			this->ProtocolName->Location = System::Drawing::Point(6, 20);
+			this->ProtocolName->Location = System::Drawing::Point(4, 16);
+			this->ProtocolName->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->ProtocolName->Name = L"ProtocolName";
-			this->ProtocolName->Size = System::Drawing::Size(278, 32);
+			this->ProtocolName->Size = System::Drawing::Size(210, 27);
 			this->ProtocolName->TabIndex = 0;
 			this->ProtocolName->Text = L"";
-			// 
-			// MixingStationPage
-			// 
-			this->MixingStationPage->Location = System::Drawing::Point(4, 25);
-			this->MixingStationPage->Name = L"MixingStationPage";
-			this->MixingStationPage->Padding = System::Windows::Forms::Padding(3);
-			this->MixingStationPage->Size = System::Drawing::Size(1184, 758);
-			this->MixingStationPage->TabIndex = 1;
-			this->MixingStationPage->Text = L"Mixing Station";
-			this->MixingStationPage->UseVisualStyleBackColor = true;
-			// 
-			// SamplePrepPage
-			// 
-			this->SamplePrepPage->Location = System::Drawing::Point(4, 25);
-			this->SamplePrepPage->Name = L"SamplePrepPage";
-			this->SamplePrepPage->Size = System::Drawing::Size(1184, 758);
-			this->SamplePrepPage->TabIndex = 2;
-			this->SamplePrepPage->Text = L"Sample Prep";
-			this->SamplePrepPage->UseVisualStyleBackColor = true;
+			this->ProtocolName->Visible = false;
 			// 
 			// StatusTimer
 			// 
 			this->StatusTimer->Enabled = true;
 			// 
+			// menuStrip1
+			// 
+			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->menuStrip1->Location = System::Drawing::Point(0, 24);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Padding = System::Windows::Forms::Padding(4, 2, 0, 2);
+			this->menuStrip1->Size = System::Drawing::Size(904, 24);
+			this->menuStrip1->TabIndex = 1;
+			this->menuStrip1->Text = L"menuStrip1";
+			// 
+			// menuStrip2
+			// 
+			this->menuStrip2->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->fileMenuDropdown });
+			this->menuStrip2->Location = System::Drawing::Point(0, 0);
+			this->menuStrip2->Name = L"menuStrip2";
+			this->menuStrip2->Padding = System::Windows::Forms::Padding(4, 2, 0, 2);
+			this->menuStrip2->Size = System::Drawing::Size(904, 24);
+			this->menuStrip2->TabIndex = 2;
+			this->menuStrip2->Text = L"menuStrip2";
+			// 
+			// fileMenuDropdown
+			// 
+			this->fileMenuDropdown->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->openProtocolDropdown,
+					this->saveProtocolDropdown
+			});
+			this->fileMenuDropdown->Name = L"fileMenuDropdown";
+			this->fileMenuDropdown->Size = System::Drawing::Size(37, 20);
+			this->fileMenuDropdown->Text = L"File";
+			// 
+			// openProtocolDropdown
+			// 
+			this->openProtocolDropdown->Enabled = false;
+			this->openProtocolDropdown->Name = L"openProtocolDropdown";
+			this->openProtocolDropdown->Size = System::Drawing::Size(151, 22);
+			this->openProtocolDropdown->Text = L"Open Protocol";
+			this->openProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::OpenProtocol_Click);
+			// 
+			// saveProtocolDropdown
+			// 
+			this->saveProtocolDropdown->Enabled = false;
+			this->saveProtocolDropdown->Name = L"saveProtocolDropdown";
+			this->saveProtocolDropdown->Size = System::Drawing::Size(151, 22);
+			this->saveProtocolDropdown->Text = L"Save Protocol";
+			this->saveProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::SaveProtocol_Click);
+			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1205, 798);
+			this->ClientSize = System::Drawing::Size(904, 648);
 			this->Controls->Add(this->ProtocolTabs);
+			this->Controls->Add(this->menuStrip1);
+			this->Controls->Add(this->menuStrip2);
+			this->MainMenuStrip = this->menuStrip1;
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"MyForm";
 			this->Text = L"MDX Protocol Editor";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -540,7 +581,10 @@ namespace MDXProtocolEditor {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->OpticalReadsGrid))->EndInit();
 			this->groupBox2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ProtocolDataGrid))->EndInit();
+			this->menuStrip2->ResumeLayout(false);
+			this->menuStrip2->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -554,7 +598,7 @@ namespace MDXProtocolEditor {
 		saveProtocolDlg->OverwritePrompt = true;
 		saveProtocolDlg->Filter = "pcr protocols (*.qpcr)|*.qpcr|All files (*.*)|*.*";
 
-		PcrProtocol	pcrProtocol;
+		AmpDetect pcrProtocol;
 		ReadPcrProtocolFromGui(&pcrProtocol);
 		if (saveProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 		{
@@ -575,7 +619,7 @@ namespace MDXProtocolEditor {
 		WritePcrProtocolToGui(pcrProtocol);
 	}
 
-	private: System::Void WritePcrProtocolToGui(PcrProtocol& pcrProtocol)
+	private: System::Void WritePcrProtocolToGui(AmpDetect& pcrProtocol)
 	{
 		ProtocolDataGrid->Rows->Clear();
 		OpticalReadsGrid->Rows->Clear();
@@ -628,7 +672,7 @@ namespace MDXProtocolEditor {
 		}
 	}
 
-	private: System::Void ReadPcrProtocolFromGui(PcrProtocol* pPcrProtocol)
+	private: System::Void ReadPcrProtocolFromGui(AmpDetect* pPcrProtocol)
 	{
 		pPcrProtocol->Clear();
 
@@ -688,7 +732,7 @@ namespace MDXProtocolEditor {
 			for (int i = 0; i < (int)binFile->BaseStream->Length; i++)
 				arTemp[i] = protocolBuf[i];
 
-			PcrProtocol pcrProtocol;
+			AmpDetect pcrProtocol;
 			pcrProtocol << arTemp;
 			WritePcrProtocolToGui(pcrProtocol);
 			binFile->Close();
@@ -723,6 +767,21 @@ namespace MDXProtocolEditor {
 		{
 			if (OpticalReadsGrid->Rows[nRowIdx]->Selected)
 				OpticalReadsGrid->Rows->RemoveAt(nRowIdx);
+		}
+	}
+
+	// Handle menu items being enabled and disabled based on tab
+	private: System::Void ProtocolTabs_TabIndexChanged(System::Object^  sender, System::EventArgs^  e)
+	{
+		if (ProtocolTabs->SelectedTab->Name == "AmpDetectPage")
+		{
+			openProtocolDropdown->Enabled = true;
+			saveProtocolDropdown->Enabled = true;
+		}
+		else 
+		{
+			openProtocolDropdown->Enabled = false;
+			saveProtocolDropdown->Enabled = false;
 		}
 	}
 };
