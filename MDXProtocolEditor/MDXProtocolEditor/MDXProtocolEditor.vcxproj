@@ -180,14 +180,6 @@
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Users\Nikola Ostojic\Desktop\Projects\AmpDetectDLL\AmpDetectDLL.vcxproj">
-      <Project>{d89ab9d7-8745-4a97-b4ac-d0906f89e522}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Users\Nikola Ostojic\Desktop\Projects\MixingStationDLL\MixingStationDLL.vcxproj">
-      <Project>{62477c5b-65b4-423b-8ea8-afe52ababede}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
