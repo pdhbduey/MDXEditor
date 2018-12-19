@@ -8,7 +8,7 @@
 #include <fstream>
 #include <msclr\marshal.h>
 
-#include "AmpDetect.h"
+#include "PcrProtocol.h"
 
 using namespace System::IO::Ports;
 using namespace msclr::interop;
@@ -634,7 +634,7 @@ namespace MDXProtocolEditor {
 		saveProtocolDlg->OverwritePrompt = true;
 		saveProtocolDlg->Filter = "pcr protocols (*.qpcr)|*.qpcr|All files (*.*)|*.*";
 
-		AmpDetect ampDetect;
+		PcrProtocol ampDetect;
 		ReadAmpDetectFromGui(&ampDetect);
 		if (saveProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 		{
@@ -655,7 +655,7 @@ namespace MDXProtocolEditor {
 		WriteAmpDetectToGui(ampDetect);
 	}
 
-	private: System::Void WriteAmpDetectToGui(AmpDetect& ampDetect)
+	private: System::Void WriteAmpDetectToGui(PcrProtocol& ampDetect)
 	{
 		ProtocolDataGrid->Rows->Clear();
 		OpticalReadsGrid->Rows->Clear();
@@ -708,7 +708,7 @@ namespace MDXProtocolEditor {
 		}
 	}
 
-	private: System::Void ReadAmpDetectFromGui(AmpDetect* pAmpDetect)
+	private: System::Void ReadAmpDetectFromGui(PcrProtocol* pAmpDetect)
 	{
 		pAmpDetect->Clear();
 
@@ -768,7 +768,7 @@ namespace MDXProtocolEditor {
 			for (int i = 0; i < (int)binFile->BaseStream->Length; i++)
 				arTemp[i] = protocolBuf[i];
 
-			AmpDetect ampDetect;
+			PcrProtocol ampDetect;
 			ampDetect << arTemp;
 			WriteAmpDetectToGui(ampDetect);
 			binFile->Close();

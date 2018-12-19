@@ -39,25 +39,16 @@
     <ClInclude Include="SysStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MdxProtocolBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AmpDetect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SamplePrep.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MixingStation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OpticalRead.h">
+    <ClInclude Include="MdxProtocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Step.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Segment.h">
+    <ClInclude Include="PcrProtocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

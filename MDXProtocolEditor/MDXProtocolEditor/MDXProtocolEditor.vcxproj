@@ -147,21 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AmpDetect.h" />
+    <ClInclude Include="PcrProtocol.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="ErrorCodes.h" />
     <ClInclude Include="HostMessages.h" />
-    <ClInclude Include="MdxProtocolBase.h" />
+    <ClInclude Include="MdxProtocol.h" />
     <ClInclude Include="MixingStation.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="OpticalRead.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SamplePrep.h" />
-    <ClInclude Include="Segment.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Step.h" />
     <ClInclude Include="StreamingObj.h" />
     <ClInclude Include="SysStatus.h" />
   </ItemGroup>
