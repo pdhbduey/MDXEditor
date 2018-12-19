@@ -82,7 +82,6 @@ namespace MDXProtocolEditor {
 		MyForm(void)
 		{
 			InitializeComponent();
-			OpticsTypeCombo->SelectedIndex = 0;
 			this->Text = this->Text + " (" + Application::ProductVersion + ")";
 			
 		}
@@ -138,7 +137,7 @@ namespace MDXProtocolEditor {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  RefDetectorIndex;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  DetectorIntegrationTime;
 	private: System::Windows::Forms::Label^  label7;
-	private: System::Windows::Forms::ComboBox^  OpticsTypeCombo;
+
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::Timer^  StatusTimer;
 	private: System::Windows::Forms::FolderBrowserDialog^  SelectDataFolderDlg;
@@ -175,7 +174,9 @@ namespace MDXProtocolEditor {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->ProtocolTabs = (gcnew System::Windows::Forms::TabControl());
 			this->SamplePrepPage = (gcnew System::Windows::Forms::TabPage());
+			this->samplePrep1 = (gcnew SamplePrepUserControl::SamplePrep());
 			this->MixingStationPage = (gcnew System::Windows::Forms::TabPage());
+			this->mixingStation1 = (gcnew MixingStationUserControl::MixingStation());
 			this->AmpDetectPage = (gcnew System::Windows::Forms::TabPage());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->DelOptReadBtn = (gcnew System::Windows::Forms::Button());
@@ -188,7 +189,6 @@ namespace MDXProtocolEditor {
 			this->RefDetectorIndex = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->DetectorIntegrationTime = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->OpticsTypeCombo = (gcnew System::Windows::Forms::ComboBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->ProtocolDataGrid = (gcnew System::Windows::Forms::DataGridView());
@@ -212,8 +212,6 @@ namespace MDXProtocolEditor {
 			this->openProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->closeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->mixingStation1 = (gcnew MixingStationUserControl::MixingStation());
-			this->samplePrep1 = (gcnew SamplePrepUserControl::SamplePrep());
 			this->ProtocolTabs->SuspendLayout();
 			this->SamplePrepPage->SuspendLayout();
 			this->MixingStationPage->SuspendLayout();
@@ -250,6 +248,13 @@ namespace MDXProtocolEditor {
 			this->SamplePrepPage->Text = L"Sample Prep";
 			this->SamplePrepPage->UseVisualStyleBackColor = true;
 			// 
+			// samplePrep1
+			// 
+			this->samplePrep1->Location = System::Drawing::Point(4, 4);
+			this->samplePrep1->Name = L"samplePrep1";
+			this->samplePrep1->Size = System::Drawing::Size(150, 150);
+			this->samplePrep1->TabIndex = 0;
+			// 
 			// MixingStationPage
 			// 
 			this->MixingStationPage->Controls->Add(this->mixingStation1);
@@ -261,6 +266,13 @@ namespace MDXProtocolEditor {
 			this->MixingStationPage->TabIndex = 1;
 			this->MixingStationPage->Text = L"Mixing Station";
 			this->MixingStationPage->UseVisualStyleBackColor = true;
+			// 
+			// mixingStation1
+			// 
+			this->mixingStation1->Location = System::Drawing::Point(6, 6);
+			this->mixingStation1->Name = L"mixingStation1";
+			this->mixingStation1->Size = System::Drawing::Size(150, 150);
+			this->mixingStation1->TabIndex = 0;
 			// 
 			// AmpDetectPage
 			// 
@@ -282,7 +294,6 @@ namespace MDXProtocolEditor {
 			this->groupBox1->Controls->Add(this->AddOptReadBtn);
 			this->groupBox1->Controls->Add(this->OpticalReadsGrid);
 			this->groupBox1->Controls->Add(this->label7);
-			this->groupBox1->Controls->Add(this->OpticsTypeCombo);
 			this->groupBox1->Controls->Add(this->label6);
 			this->groupBox1->Location = System::Drawing::Point(2, 352);
 			this->groupBox1->Name = L"groupBox1";
@@ -293,7 +304,7 @@ namespace MDXProtocolEditor {
 			// 
 			// DelOptReadBtn
 			// 
-			this->DelOptReadBtn->Location = System::Drawing::Point(9, 110);
+			this->DelOptReadBtn->Location = System::Drawing::Point(9, 82);
 			this->DelOptReadBtn->Margin = System::Windows::Forms::Padding(2);
 			this->DelOptReadBtn->Name = L"DelOptReadBtn";
 			this->DelOptReadBtn->Size = System::Drawing::Size(128, 23);
@@ -304,7 +315,7 @@ namespace MDXProtocolEditor {
 			// 
 			// AddOptReadBtn
 			// 
-			this->AddOptReadBtn->Location = System::Drawing::Point(9, 83);
+			this->AddOptReadBtn->Location = System::Drawing::Point(9, 55);
 			this->AddOptReadBtn->Margin = System::Windows::Forms::Padding(2);
 			this->AddOptReadBtn->Name = L"AddOptReadBtn";
 			this->AddOptReadBtn->Size = System::Drawing::Size(128, 23);
@@ -377,23 +388,14 @@ namespace MDXProtocolEditor {
 			this->label7->TabIndex = 2;
 			this->label7->Text = L"Optical reads:";
 			// 
-			// OpticsTypeCombo
-			// 
-			this->OpticsTypeCombo->FormattingEnabled = true;
-			this->OpticsTypeCombo->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Photodiode", L"Camera" });
-			this->OpticsTypeCombo->Location = System::Drawing::Point(9, 44);
-			this->OpticsTypeCombo->Name = L"OpticsTypeCombo";
-			this->OpticsTypeCombo->Size = System::Drawing::Size(128, 21);
-			this->OpticsTypeCombo->TabIndex = 1;
-			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
 			this->label6->Location = System::Drawing::Point(6, 28);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(34, 13);
+			this->label6->Size = System::Drawing::Size(91, 13);
 			this->label6->TabIndex = 0;
-			this->label6->Text = L"Type:";
+			this->label6->Text = L"Type: Photodiode";
 			// 
 			// groupBox2
 			// 
@@ -580,20 +582,6 @@ namespace MDXProtocolEditor {
 			this->closeToolStripMenuItem->Text = L"Close";
 			this->closeToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::closeToolStripMenuItem_Click);
 			// 
-			// mixingStation1
-			// 
-			this->mixingStation1->Location = System::Drawing::Point(6, 6);
-			this->mixingStation1->Name = L"mixingStation1";
-			this->mixingStation1->Size = System::Drawing::Size(150, 150);
-			this->mixingStation1->TabIndex = 0;
-			// 
-			// samplePrep1
-			// 
-			this->samplePrep1->Location = System::Drawing::Point(4, 4);
-			this->samplePrep1->Name = L"samplePrep1";
-			this->samplePrep1->Size = System::Drawing::Size(150, 150);
-			this->samplePrep1->TabIndex = 0;
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -661,7 +649,6 @@ namespace MDXProtocolEditor {
 		OpticalReadsGrid->Rows->Clear();
 
 		//Iterate through all optical reads in this protocol.
-		OpticsTypeCombo->SelectedIndex = ampDetect.GetFluorDetectorType();
 		for (int i = 0; i < (int)ampDetect.GetNumOpticalReads(); i++)
 		{
 			DataGridViewRow^ row = gcnew DataGridViewRow;
@@ -713,7 +700,7 @@ namespace MDXProtocolEditor {
 		pAmpDetect->Clear();
 
 		OpticalRead optRead;
-		pAmpDetect->SetFluorDetectorType((FluorDetectorType)OpticsTypeCombo->SelectedIndex);
+		pAmpDetect->SetFluorDetectorType(kPhotoDiode);
 		for (int nRowIdx = 0; nRowIdx < OpticalReadsGrid->Rows->Count; nRowIdx++)
 		{
 			optRead.SetLedIdx(Convert::ToInt32(OpticalReadsGrid[0, nRowIdx]->Value));
