@@ -9,6 +9,7 @@
 #include <msclr\marshal.h>
 
 #include "PcrProtocol.h"
+#include "MdxProtocol.h"
 
 using namespace System::IO::Ports;
 using namespace msclr::interop;
@@ -83,7 +84,7 @@ namespace MDXProtocolEditor {
 		{
 			InitializeComponent();
 			this->Text = this->Text + " (" + Application::ProductVersion + ")";
-			
+			MdxProtocol* mdxProtocol = new MdxProtocol();
 		}
 
 	protected:

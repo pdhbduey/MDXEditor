@@ -4,7 +4,9 @@
 class MdxProtocol
 {
 	public:
-		MdxProtocol() {};
+		MdxProtocol() 
+		{
+		};
 };
 
 #endif // __MdxProtocolBase_H

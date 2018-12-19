@@ -5,7 +5,7 @@
 
 #include <cstdint>
 #include <vector>
-#include "MdxProtocolBase.h"
+#include "MdxProtocol.h"
 #include "Common.h"
 
 class SamplePrep 
