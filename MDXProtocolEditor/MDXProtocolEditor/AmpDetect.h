@@ -9,7 +9,7 @@
 #include "Segment.h"
 #include "Common.h"
 
-class AmpDetect : public StreamingObj, public MdxProtocolBase
+class AmpDetect : public StreamingObj
 {
 public:
 	AmpDetect()

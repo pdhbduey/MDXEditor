@@ -8,7 +8,7 @@
 #include "MdxProtocolBase.h"
 #include "Common.h"
 
-class MixingStation : public MdxProtocolBase
+class MixingStation 
 {
 public:
 	MixingStation();

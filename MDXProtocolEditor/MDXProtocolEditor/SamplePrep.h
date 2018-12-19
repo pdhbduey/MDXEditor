@@ -8,7 +8,7 @@
 #include "MdxProtocolBase.h"
 #include "Common.h"
 
-class SamplePrep : public MdxProtocolBase
+class SamplePrep 
 {
 public:
 	SamplePrep();
