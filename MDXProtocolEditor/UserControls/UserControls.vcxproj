@@ -133,13 +133,21 @@
     <ClInclude Include="AmpDetectPage.h">
       <FileType>CppControl</FileType>
     </ClInclude>
+    <ClInclude Include="MixingStationPage.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SamplePrepPage.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UserControls.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AmpDetectPage.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="MixingStationPage.cpp" />
+    <ClCompile Include="SamplePrepPage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -164,6 +172,12 @@
   <ItemGroup>
     <EmbeddedResource Include="AmpDetectPage.resx">
       <DependentUpon>AmpDetectPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MixingStationPage.resx">
+      <DependentUpon>MixingStationPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SamplePrepPage.resx">
+      <DependentUpon>SamplePrepPage.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

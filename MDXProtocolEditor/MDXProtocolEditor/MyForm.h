@@ -129,6 +129,8 @@ namespace MDXProtocolEditor {
 
 
 	private: UserControls::AmpDetectPage^  ampDetectPage1;
+	private: UserControls::MixingStationPage^  mixingStationPage1;
+	private: UserControls::SamplePrepPage^  samplePrepPage1;
 
 
 
@@ -150,6 +152,7 @@ namespace MDXProtocolEditor {
 			this->ProtocolTabs = (gcnew System::Windows::Forms::TabControl());
 			this->SamplePrepPage = (gcnew System::Windows::Forms::TabPage());
 			this->MixingStationPage = (gcnew System::Windows::Forms::TabPage());
+			this->mixingStationPage1 = (gcnew UserControls::MixingStationPage());
 			this->AmpDetectPage = (gcnew System::Windows::Forms::TabPage());
 			this->ampDetectPage1 = (gcnew UserControls::AmpDetectPage());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
@@ -158,7 +161,10 @@ namespace MDXProtocolEditor {
 			this->openProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->closeDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->samplePrepPage1 = (gcnew UserControls::SamplePrepPage());
 			this->ProtocolTabs->SuspendLayout();
+			this->SamplePrepPage->SuspendLayout();
+			this->MixingStationPage->SuspendLayout();
 			this->AmpDetectPage->SuspendLayout();
 			this->menuStrip2->SuspendLayout();
 			this->SuspendLayout();
@@ -179,6 +185,7 @@ namespace MDXProtocolEditor {
 			// 
 			// SamplePrepPage
 			// 
+			this->SamplePrepPage->Controls->Add(this->samplePrepPage1);
 			this->SamplePrepPage->Location = System::Drawing::Point(4, 22);
 			this->SamplePrepPage->Margin = System::Windows::Forms::Padding(2);
 			this->SamplePrepPage->Name = L"SamplePrepPage";
@@ -189,6 +196,7 @@ namespace MDXProtocolEditor {
 			// 
 			// MixingStationPage
 			// 
+			this->MixingStationPage->Controls->Add(this->mixingStationPage1);
 			this->MixingStationPage->Location = System::Drawing::Point(4, 22);
 			this->MixingStationPage->Margin = System::Windows::Forms::Padding(2);
 			this->MixingStationPage->Name = L"MixingStationPage";
@@ -197,6 +205,13 @@ namespace MDXProtocolEditor {
 			this->MixingStationPage->TabIndex = 1;
 			this->MixingStationPage->Text = L"Mixing Station";
 			this->MixingStationPage->UseVisualStyleBackColor = true;
+			// 
+			// mixingStationPage1
+			// 
+			this->mixingStationPage1->Location = System::Drawing::Point(6, 6);
+			this->mixingStationPage1->Name = L"mixingStationPage1";
+			this->mixingStationPage1->Size = System::Drawing::Size(150, 150);
+			this->mixingStationPage1->TabIndex = 0;
 			// 
 			// AmpDetectPage
 			// 
@@ -268,6 +283,13 @@ namespace MDXProtocolEditor {
 			this->closeDropdown->Size = System::Drawing::Size(114, 22);
 			this->closeDropdown->Text = L"Close";
 			// 
+			// samplePrepPage1
+			// 
+			this->samplePrepPage1->Location = System::Drawing::Point(4, 4);
+			this->samplePrepPage1->Name = L"samplePrepPage1";
+			this->samplePrepPage1->Size = System::Drawing::Size(150, 150);
+			this->samplePrepPage1->TabIndex = 0;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -282,6 +304,8 @@ namespace MDXProtocolEditor {
 			this->Text = L"MDX Protocol Editor";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ProtocolTabs->ResumeLayout(false);
+			this->SamplePrepPage->ResumeLayout(false);
+			this->MixingStationPage->ResumeLayout(false);
 			this->AmpDetectPage->ResumeLayout(false);
 			this->menuStrip2->ResumeLayout(false);
 			this->menuStrip2->PerformLayout();
