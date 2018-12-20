@@ -24,33 +24,6 @@
     <ClInclude Include="MyForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ErrorCodes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HostMessages.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StreamingObj.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SysStatus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SamplePrep.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MixingStation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MdxProtocol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PcrProtocol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

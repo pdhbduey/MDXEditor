@@ -20,10 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{915D3DA3-0BFD-47C5-9473-51537236D7B2}</ProjectGuid>
+    <ProjectGuid>{DFA90338-4709-401C-8855-DEC7E2D50D27}</ProjectGuid>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>MixingStationUserControl</RootNamespace>
+    <RootNamespace>MdxProtocolObjects</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -128,17 +128,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="MixingStation.h">
-      <FileType>CppControl</FileType>
-    </ClInclude>
-    <ClInclude Include="MixingStationUserControl.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="ErrorCodes.h" />
+    <ClInclude Include="HostMessages.h" />
+    <ClInclude Include="MdxProtocol.h" />
+    <ClInclude Include="MdxProtocolObjects.h" />
+    <ClInclude Include="MixingProtocol.h" />
+    <ClInclude Include="PcrProtocol.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SamplePrepProtocol.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StreamingObj.h" />
+    <ClInclude Include="SysStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="MixingStation.cpp" />
-    <ClCompile Include="MixingStationUserControl.cpp" />
+    <ClCompile Include="MdxProtocolObjects.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -155,14 +160,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="MixingStation.resx">
-      <DependentUpon>MixingStation.h</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,9 @@ using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
 
+#include "PcrProtocol.h"
+#include "MdxProtocol.h"
+#pragma make_public(MdxProtocol)
 
 namespace UserControls {
 	/// <summary>
@@ -15,7 +18,7 @@ namespace UserControls {
 	public ref class AmpDetectPage : public System::Windows::Forms::UserControl
 	{
 	public:
-		AmpDetectPage(void)
+		AmpDetectPage()
 		{
 			InitializeComponent();
 			//
@@ -38,7 +41,7 @@ namespace UserControls {
 	private: System::Windows::Forms::GroupBox^  opticsGroupBox;
 	private: System::Windows::Forms::Button^  NewStep;
 	private: System::Windows::Forms::Button^  DeleteStep;
-	private: System::Windows::Forms::DataGridView^  ProtocolDataGrid;
+	public: System::Windows::Forms::DataGridView^  ProtocolDataGrid;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Cycles;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Steps;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Setpoint;
@@ -50,18 +53,28 @@ namespace UserControls {
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::Button^  DelOptReadBtn;
 	private: System::Windows::Forms::Label^  label7;
-	private: System::Windows::Forms::DataGridView^  OpticalReadsGrid;
+	public: System::Windows::Forms::DataGridView^  OpticalReadsGrid;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  LEDIndex;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  LedIntensity;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  LedStabilizationTime;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  DetectorIndex;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  RefDetectorIndex;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  DetectorIntegrationTime;
+	private: System::Windows::Forms::SaveFileDialog^  saveProtocolDlg;
+	private: System::Windows::Forms::OpenFileDialog^  openProtocolDlg;
+	private: System::Windows::Forms::FolderBrowserDialog^  SelectDataFolderDlg;
+	private: System::Windows::Forms::Timer^  StatusTimer;
+	private: System::ComponentModel::IContainer^  components;
 
-	// Form handlers
+	// Handlers
+	private:
+		MdxProtocol* ampDetectProtocol;
 	public: 
-
-		//event EventHandler ^ OnClickNewStepButton;
+		System::Void PassMdxProtocolObject(MdxProtocol* mdxProtocol) 
+		{
+			ampDetectProtocol = mdxProtocol;
+		}
+		event EventHandler ^ OnClickNewStepButton;
 	protected:
 
 	protected:
@@ -70,7 +83,7 @@ namespace UserControls {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 
 #pragma region Windows Form Designer generated code
@@ -80,6 +93,7 @@ namespace UserControls {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->thermalProfileGroupBox = (gcnew System::Windows::Forms::GroupBox());
 			this->ProtocolDataGrid = (gcnew System::Windows::Forms::DataGridView());
 			this->Cycles = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -103,6 +117,10 @@ namespace UserControls {
 			this->DelOptReadBtn = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->AddOptReadBtn = (gcnew System::Windows::Forms::Button());
+			this->saveProtocolDlg = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->openProtocolDlg = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->SelectDataFolderDlg = (gcnew System::Windows::Forms::FolderBrowserDialog());
+			this->StatusTimer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->thermalProfileGroupBox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ProtocolDataGrid))->BeginInit();
 			this->opticsGroupBox->SuspendLayout();
@@ -255,7 +273,7 @@ namespace UserControls {
 			this->OpticalReadsGrid->Margin = System::Windows::Forms::Padding(2);
 			this->OpticalReadsGrid->Name = L"OpticalReadsGrid";
 			this->OpticalReadsGrid->RowTemplate->Height = 24;
-			this->OpticalReadsGrid->Size = System::Drawing::Size(694, 179);
+			this->OpticalReadsGrid->Size = System::Drawing::Size(763, 179);
 			this->OpticalReadsGrid->TabIndex = 15;
 			// 
 			// LEDIndex
@@ -332,6 +350,14 @@ namespace UserControls {
 			this->AddOptReadBtn->UseVisualStyleBackColor = true;
 			this->AddOptReadBtn->Click += gcnew System::EventHandler(this, &AmpDetectPage::AddOptReadBtn_Click);
 			// 
+			// saveProtocolDlg
+			// 
+			this->saveProtocolDlg->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &AmpDetectPage::saveProtocolDlg_FileOk);
+			// 
+			// StatusTimer
+			// 
+			this->StatusTimer->Enabled = true;
+			// 
 			// AmpDetectPage
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -378,6 +404,95 @@ namespace UserControls {
 		{
 			if (OpticalReadsGrid->Rows[nRowIdx]->Selected)
 				OpticalReadsGrid->Rows->RemoveAt(nRowIdx);
+		}
+	}
+
+	private: System::Void saveProtocolDlg_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
+	}
+
+	private: System::Void closeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		ProtocolDataGrid->Rows->Clear();
+		OpticalReadsGrid->Rows->Clear();
+	}
+
+	private: System::Void OpenProtocol(System::Object^  sender, System::EventArgs^  e)
+	{
+		ProtocolDataGrid->Rows->Clear();
+		OpticalReadsGrid->Rows->Clear();
+
+		//enProtocolDlg->FileName = ProtocolName->Text;
+		openProtocolDlg->AddExtension = true;
+		openProtocolDlg->Filter = "pcr protocols (*.qpcr)|*.qpcr|All files (*.*)|*.*";
+
+		if (openProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+		{
+			//ProtocolName->Text = openProtocolDlg->FileName;
+			System::IO::StreamReader^ file = gcnew System::IO::StreamReader("");// ProtocolName->Text);
+			System::IO::BinaryReader^ binFile = gcnew System::IO::BinaryReader(file->BaseStream);
+
+			array<uint8_t>^ protocolBuf = binFile->ReadBytes((int)binFile->BaseStream->Length);
+			uint8_t arTemp[5 * 1024];
+			for (int i = 0; i < (int)binFile->BaseStream->Length; i++)
+				arTemp[i] = protocolBuf[i];
+
+			PcrProtocol ampDetect;
+			ampDetect << arTemp;
+			ampDetectProtocol->UpdatePcrProtocol(ampDetect);
+			WriteAmpDetectToGui(ampDetect);
+			binFile->Close();
+		}
+	}
+
+	private: System::Void WriteAmpDetectToGui(PcrProtocol& ampDetect)
+	{
+		ProtocolDataGrid->Rows->Clear();
+		OpticalReadsGrid->Rows->Clear();
+
+		//Iterate through all optical reads in this protocol.
+		for (int i = 0; i < (int)ampDetect.GetNumOpticalReads(); i++)
+		{
+			DataGridViewRow^ row = gcnew DataGridViewRow;
+			OpticalReadsGrid->Rows->Add(row);
+			int nRowIdx = OpticalReadsGrid->RowCount - 1;
+			OpticalRead optRead = ampDetect.GetOpticalRead(i);
+
+			OpticalReadsGrid[0, nRowIdx]->Value = optRead.GetLedIdx();
+			OpticalReadsGrid[1, nRowIdx]->Value = optRead.GetLedIntensity();
+			OpticalReadsGrid[2, nRowIdx]->Value = optRead.GetLedStablizationTime();
+			OpticalReadsGrid[3, nRowIdx]->Value = optRead.GetDetectorIdx();
+			OpticalReadsGrid[4, nRowIdx]->Value = optRead.GetReferenceIdx();
+			OpticalReadsGrid[5, nRowIdx]->Value = optRead.GetDetectorIntegrationTime();
+		}
+
+		//Iterate through all segments in this protocol.
+		for (int nSegIdx = 0; nSegIdx < (int)ampDetect.GetNumSegs(); nSegIdx++)
+		{
+			Segment seg = ampDetect.GetSegment(nSegIdx);
+
+			//Iterate through all steps in this segment.
+			for (int nStepIdx = 0; nStepIdx < (int)seg.GetNumSteps(); nStepIdx++)
+			{
+				DataGridViewRow^ row = gcnew DataGridViewRow;
+				ProtocolDataGrid->Rows->Add(row);
+				int nRowIdx = ProtocolDataGrid->RowCount - 1;
+				Step step = seg.GetStep(nStepIdx);
+
+				//If this is the first step in the segment, report number of cycles.
+				if (nStepIdx == 0)
+					ProtocolDataGrid[0, nRowIdx]->Value = Convert::ToString(seg.GetNumCycles());
+
+				ProtocolDataGrid[1, nRowIdx]->Value = Convert::ToString(nStepIdx + 1);
+				ProtocolDataGrid[2, nRowIdx]->Value = Convert::ToString((double)step.GetTargetTemp() / 1000);
+				ProtocolDataGrid[3, nRowIdx]->Value = Convert::ToString((double)step.GetHoldTimer() / 1000);
+				ProtocolDataGrid[4, nRowIdx]->Value = Convert::ToString((double)step.GetRampRate() / 1000);
+
+				//Optical acquisition.
+				ProtocolDataGrid[5, nRowIdx]->Value = step.GetOpticalAcqFlg();
+
+				//Melt
+				ProtocolDataGrid[6, nRowIdx]->Value = step.GetMeltFlg();
+			}
 		}
 	}
 };

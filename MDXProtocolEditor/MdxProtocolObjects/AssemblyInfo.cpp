@@ -6,11 +6,11 @@ using namespace System::Runtime::CompilerServices;
 using namespace System::Runtime::InteropServices;
 using namespace System::Security::Permissions;
 
-[assembly:AssemblyTitleAttribute(L"SamplePrepUserControl")];
+[assembly:AssemblyTitleAttribute(L"MdxProtocolObjects")];
 [assembly:AssemblyDescriptionAttribute(L"")];
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"")];
-[assembly:AssemblyProductAttribute(L"SamplePrepUserControl")];
+[assembly:AssemblyProductAttribute(L"MdxProtocolObjects")];
 [assembly:AssemblyCopyrightAttribute(L"Copyright (c)  2018")];
 [assembly:AssemblyTrademarkAttribute(L"")];
 [assembly:AssemblyCultureAttribute(L"")];

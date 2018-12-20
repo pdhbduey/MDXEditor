@@ -105,6 +105,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\MDXProtocolEditorSource\MDXProtocolEditor\MdxProtocolObjects;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -147,20 +148,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="PcrProtocol.h" />
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="ErrorCodes.h" />
-    <ClInclude Include="HostMessages.h" />
-    <ClInclude Include="MdxProtocol.h" />
-    <ClInclude Include="MixingStation.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SamplePrep.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="StreamingObj.h" />
-    <ClInclude Include="SysStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
@@ -192,11 +184,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MixingStationUserControl\MixingStationUserControl.vcxproj">
-      <Project>{915d3da3-0bfd-47c5-9473-51537236d7b2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\SamplePrepUserControl\SamplePrepUserControl.vcxproj">
-      <Project>{4539d89d-22c3-43d8-a860-53e33be21643}</Project>
+    <ProjectReference Include="..\MdxProtocolObjects\MdxProtocolObjects.vcxproj">
+      <Project>{dfa90338-4709-401c-8855-dec7e2d50d27}</Project>
     </ProjectReference>
     <ProjectReference Include="..\UserControls\UserControls.vcxproj">
       <Project>{6d81bea1-0aaa-48ec-bb03-5eda25f45a24}</Project>
