@@ -76,11 +76,11 @@ namespace UserControls {
 
 	// Handlers
 	private:
-		MdxProtocol* ampDetectProtocol;
+		MdxProtocol* mdxProtocol;
 	public: 
 		System::Void PassMdxProtocolObject(MdxProtocol* mdxProtocol) 
 		{
-			ampDetectProtocol = mdxProtocol;
+			this->mdxProtocol = mdxProtocol;
 		}
 		event EventHandler ^ OnClickNewStepButton;
 	protected:
