@@ -119,6 +119,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\MdxProtocolObjects</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
