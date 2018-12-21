@@ -14,6 +14,9 @@ private: PcrProtocol* pcrProtocol;
 	public:
 		MdxProtocol()
 		{
+			pcrProtocol = new PcrProtocol();
+			mixingProtocol = new MixingProtocol();
+			samplePrepProtocol = new SamplePrepProtocol();
 		};
 
 		PcrProtocol* GetPcrProtocol() 

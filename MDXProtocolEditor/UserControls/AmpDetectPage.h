@@ -65,6 +65,8 @@ namespace UserControls {
 	private: System::Windows::Forms::FolderBrowserDialog^  SelectDataFolderDlg;
 	private: System::Windows::Forms::Timer^  StatusTimer;
 	private: System::ComponentModel::IContainer^  components;
+	private: System::Windows::Forms::TextBox^  ProtocolName;
+
 
 	// Handlers
 	private:
@@ -121,6 +123,7 @@ namespace UserControls {
 			this->openProtocolDlg = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->SelectDataFolderDlg = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->StatusTimer = (gcnew System::Windows::Forms::Timer(this->components));
+			this->ProtocolName = (gcnew System::Windows::Forms::TextBox());
 			this->thermalProfileGroupBox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ProtocolDataGrid))->BeginInit();
 			this->opticsGroupBox->SuspendLayout();
@@ -129,6 +132,7 @@ namespace UserControls {
 			// 
 			// thermalProfileGroupBox
 			// 
+			this->thermalProfileGroupBox->Controls->Add(this->ProtocolName);
 			this->thermalProfileGroupBox->Controls->Add(this->ProtocolDataGrid);
 			this->thermalProfileGroupBox->Controls->Add(this->DeleteStep);
 			this->thermalProfileGroupBox->Controls->Add(this->NewStep);
@@ -358,6 +362,14 @@ namespace UserControls {
 			// 
 			this->StatusTimer->Enabled = true;
 			// 
+			// ProtocolName
+			// 
+			this->ProtocolName->Location = System::Drawing::Point(613, 22);
+			this->ProtocolName->Name = L"ProtocolName";
+			this->ProtocolName->Size = System::Drawing::Size(100, 20);
+			this->ProtocolName->TabIndex = 11;
+			this->ProtocolName->Visible = false;
+			// 
 			// AmpDetectPage
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -367,6 +379,7 @@ namespace UserControls {
 			this->Name = L"AmpDetectPage";
 			this->Size = System::Drawing::Size(901, 666);
 			this->thermalProfileGroupBox->ResumeLayout(false);
+			this->thermalProfileGroupBox->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ProtocolDataGrid))->EndInit();
 			this->opticsGroupBox->ResumeLayout(false);
 			this->opticsGroupBox->PerformLayout();
@@ -407,28 +420,30 @@ namespace UserControls {
 		}
 	}
 
-	private: System::Void saveProtocolDlg_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
+	private: System::Void saveProtocolDlg_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) 
+	{
+
 	}
 
-	private: System::Void closeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+	public: System::Void ClearGrids()
 	{
 		ProtocolDataGrid->Rows->Clear();
 		OpticalReadsGrid->Rows->Clear();
 	}
 
-	private: System::Void OpenProtocol(System::Object^  sender, System::EventArgs^  e)
+	public: System::Void OpenProtocol()
 	{
 		ProtocolDataGrid->Rows->Clear();
 		OpticalReadsGrid->Rows->Clear();
 
-		//enProtocolDlg->FileName = ProtocolName->Text;
+		openProtocolDlg->FileName = ProtocolName->Text;
 		openProtocolDlg->AddExtension = true;
 		openProtocolDlg->Filter = "pcr protocols (*.qpcr)|*.qpcr|All files (*.*)|*.*";
 
 		if (openProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 		{
-			//ProtocolName->Text = openProtocolDlg->FileName;
-			System::IO::StreamReader^ file = gcnew System::IO::StreamReader("");// ProtocolName->Text);
+			ProtocolName->Text = openProtocolDlg->FileName;
+			System::IO::StreamReader^ file = gcnew System::IO::StreamReader(ProtocolName->Text);
 			System::IO::BinaryReader^ binFile = gcnew System::IO::BinaryReader(file->BaseStream);
 
 			array<uint8_t>^ protocolBuf = binFile->ReadBytes((int)binFile->BaseStream->Length);
@@ -493,6 +508,78 @@ namespace UserControls {
 				//Melt
 				ProtocolDataGrid[6, nRowIdx]->Value = step.GetMeltFlg();
 			}
+		}
+	}
+
+	public: System::Void SaveProtocol()
+	{
+		saveProtocolDlg->FileName = ProtocolName->Text;
+		saveProtocolDlg->AddExtension = true;
+		saveProtocolDlg->OverwritePrompt = true;
+		saveProtocolDlg->Filter = "pcr protocols (*.qpcr)|*.qpcr|All files (*.*)|*.*";
+
+		PcrProtocol ampDetect;
+		ReadAmpDetectFromGui(&ampDetect);
+		ampDetectProtocol->UpdatePcrProtocol(ampDetect);
+		if (saveProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+		{
+			ProtocolName->Text = saveProtocolDlg->FileName;
+			System::IO::StreamWriter^ file = gcnew System::IO::StreamWriter(ProtocolName->Text);
+			System::IO::BinaryWriter^ binFile = gcnew System::IO::BinaryWriter(file->BaseStream);
+
+			uint8_t arTemp[5 * 1024];
+			ampDetect >> arTemp;
+			array<uint8_t>^ protocolBuf = gcnew array<uint8_t>(ampDetect.GetStreamSize());
+			for (int i = 0; i < (int)ampDetect.GetStreamSize(); i++)
+				protocolBuf[i] = arTemp[i];
+
+			binFile->BaseStream->SetLength(0);
+			binFile->Write(protocolBuf);
+			binFile->Close();
+		}
+		WriteAmpDetectToGui(ampDetect);
+	}
+
+	private: System::Void ReadAmpDetectFromGui(PcrProtocol* pAmpDetect)
+	{
+		pAmpDetect->Clear();
+
+		OpticalRead optRead;
+		pAmpDetect->SetFluorDetectorType(kPhotoDiode);
+		for (int nRowIdx = 0; nRowIdx < OpticalReadsGrid->Rows->Count; nRowIdx++)
+		{
+			optRead.SetLedIdx(Convert::ToInt32(OpticalReadsGrid[0, nRowIdx]->Value));
+			optRead.SetLedIntensity(Convert::ToInt32(OpticalReadsGrid[1, nRowIdx]->Value));
+			optRead.SetLedStablizationTime(Convert::ToInt32(OpticalReadsGrid[2, nRowIdx]->Value));
+			optRead.SetDetectorIdx(Convert::ToInt32(OpticalReadsGrid[3, nRowIdx]->Value));
+			optRead.SetReferenceIdx(Convert::ToInt32(OpticalReadsGrid[4, nRowIdx]->Value));
+			optRead.SetDetectorIntegrationTime(Convert::ToInt32(OpticalReadsGrid[5, nRowIdx]->Value));
+			pAmpDetect->AddOpticalRead(optRead);
+		}
+
+		Segment seg;
+		for (int nRowIdx = 0; nRowIdx < ProtocolDataGrid->Rows->Count; nRowIdx++)
+		{
+			int nNumCycles = Convert::ToInt32(ProtocolDataGrid[0, nRowIdx]->Value);
+			if ((nRowIdx == 0) && (!(nNumCycles > 0)))
+				nNumCycles = 1;
+
+			if (nNumCycles != 0)
+			{
+				seg.Clear();
+				seg.SetNumCycles(nNumCycles);
+			}
+
+			Step step;
+			step.SetTargetTemp((int32_t)(Convert::ToDouble(ProtocolDataGrid[2, nRowIdx]->Value) * 1000));
+			step.SetHoldTimer((uint32_t)(Convert::ToDouble(ProtocolDataGrid[3, nRowIdx]->Value) * 1000));
+			step.SetRampRate((int32_t)(Convert::ToDouble(ProtocolDataGrid[4, nRowIdx]->Value) * 1000));
+			step.SetOpticalAcqFlg(Convert::ToBoolean(((DataGridViewCheckBoxCell^)ProtocolDataGrid[5, nRowIdx])->Value) == true);
+			step.SetMeltFlg(Convert::ToBoolean(((DataGridViewCheckBoxCell^)ProtocolDataGrid[6, nRowIdx])->Value) == true);
+			seg.AddStep(step);
+
+			if ((nRowIdx >= ProtocolDataGrid->Rows->Count - 1) || (Convert::ToInt32(ProtocolDataGrid[0, nRowIdx + 1]->Value) > 0))
+				pAmpDetect->AddSegment(seg);
 		}
 	}
 };

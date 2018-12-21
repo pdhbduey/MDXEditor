@@ -87,7 +87,8 @@ namespace MDXProtocolEditor {
 		{
 			InitializeComponent();
 			this->Text = this->Text + " (" + Application::ProductVersion + ")";
-			this->ampDetectPage1->PassMdxProtocolObject(new MdxProtocol());
+			mdxProtocol = new MdxProtocol();
+			this->ampDetectPage1->PassMdxProtocolObject(mdxProtocol);
 		}
 
 	protected:
@@ -101,39 +102,21 @@ namespace MDXProtocolEditor {
 				delete components;
 			}
 		}
+	private: MdxProtocol* mdxProtocol;
 	private: System::Windows::Forms::TabControl^  ProtocolTabs;
 	private: System::Windows::Forms::TabPage^  AmpDetectPage;
 	private: System::Windows::Forms::TabPage^  MixingStationPage;
 	private: System::Windows::Forms::TabPage^  SamplePrepPage;
 	protected:
-
-	protected:
-
-	protected:
-
-
-
-
-
-
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::MenuStrip^  menuStrip2;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileMenuDropdown;
 	private: System::Windows::Forms::ToolStripMenuItem^  openProtocolDropdown;
 	private: System::Windows::Forms::ToolStripMenuItem^  saveProtocolDropdown;
 	private: System::Windows::Forms::ToolStripMenuItem^  closeDropdown;
-
-
-
-
-
-
 	private: UserControls::AmpDetectPage^  ampDetectPage1;
 	private: UserControls::MixingStationPage^  mixingStationPage1;
 	private: UserControls::SamplePrepPage^  samplePrepPage1;
-
-
-
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -151,6 +134,7 @@ namespace MDXProtocolEditor {
 		{
 			this->ProtocolTabs = (gcnew System::Windows::Forms::TabControl());
 			this->SamplePrepPage = (gcnew System::Windows::Forms::TabPage());
+			this->samplePrepPage1 = (gcnew UserControls::SamplePrepPage());
 			this->MixingStationPage = (gcnew System::Windows::Forms::TabPage());
 			this->mixingStationPage1 = (gcnew UserControls::MixingStationPage());
 			this->AmpDetectPage = (gcnew System::Windows::Forms::TabPage());
@@ -161,7 +145,6 @@ namespace MDXProtocolEditor {
 			this->openProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->closeDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->samplePrepPage1 = (gcnew UserControls::SamplePrepPage());
 			this->ProtocolTabs->SuspendLayout();
 			this->SamplePrepPage->SuspendLayout();
 			this->MixingStationPage->SuspendLayout();
@@ -193,6 +176,13 @@ namespace MDXProtocolEditor {
 			this->SamplePrepPage->TabIndex = 2;
 			this->SamplePrepPage->Text = L"Sample Prep";
 			this->SamplePrepPage->UseVisualStyleBackColor = true;
+			// 
+			// samplePrepPage1
+			// 
+			this->samplePrepPage1->Location = System::Drawing::Point(4, 4);
+			this->samplePrepPage1->Name = L"samplePrepPage1";
+			this->samplePrepPage1->Size = System::Drawing::Size(150, 150);
+			this->samplePrepPage1->TabIndex = 0;
 			// 
 			// MixingStationPage
 			// 
@@ -267,28 +257,24 @@ namespace MDXProtocolEditor {
 			// 
 			this->openProtocolDropdown->Enabled = false;
 			this->openProtocolDropdown->Name = L"openProtocolDropdown";
-			this->openProtocolDropdown->Size = System::Drawing::Size(114, 22);
+			this->openProtocolDropdown->Size = System::Drawing::Size(180, 22);
 			this->openProtocolDropdown->Text = L"Open ";
+			this->openProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::openProtocolDropdown_Click);
 			// 
 			// saveProtocolDropdown
 			// 
 			this->saveProtocolDropdown->Enabled = false;
 			this->saveProtocolDropdown->Name = L"saveProtocolDropdown";
-			this->saveProtocolDropdown->Size = System::Drawing::Size(114, 22);
+			this->saveProtocolDropdown->Size = System::Drawing::Size(180, 22);
 			this->saveProtocolDropdown->Text = L"Save As";
+			this->saveProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::saveProtocolDropdown_Click);
 			// 
 			// closeDropdown
 			// 
 			this->closeDropdown->Name = L"closeDropdown";
-			this->closeDropdown->Size = System::Drawing::Size(114, 22);
+			this->closeDropdown->Size = System::Drawing::Size(180, 22);
 			this->closeDropdown->Text = L"Close";
-			// 
-			// samplePrepPage1
-			// 
-			this->samplePrepPage1->Location = System::Drawing::Point(4, 4);
-			this->samplePrepPage1->Name = L"samplePrepPage1";
-			this->samplePrepPage1->Size = System::Drawing::Size(150, 150);
-			this->samplePrepPage1->TabIndex = 0;
+			this->closeDropdown->Click += gcnew System::EventHandler(this, &MyForm::closeDropdown_Click);
 			// 
 			// MyForm
 			// 
@@ -314,136 +300,9 @@ namespace MDXProtocolEditor {
 
 		}
 #pragma endregion
-	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) 
+	{
 	}
-
-	//private: System::Void SaveProtocol_Click(System::Object^  sender, System::EventArgs^  e)
-	//{
-	//	//saveProtocolDlg->FileName = AmpDetectPage->ProtocolName->Text;
-	//	saveProtocolDlg->AddExtension = true;
-	//	saveProtocolDlg->OverwritePrompt = true;
-	//	saveProtocolDlg->Filter = "pcr protocols (*.qpcr)|*.qpcr|All files (*.*)|*.*";
-
-	//	PcrProtocol ampDetect;
-	//	ReadAmpDetectFromGui(&ampDetect);
-	//	if (saveProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-	//	{
-	//		//ProtocolName->Text = saveProtocolDlg->FileName;
-	//		System::IO::StreamWriter^ file = gcnew System::IO::StreamWriter(ProtocolName->Text);
-	//		System::IO::BinaryWriter^ binFile = gcnew System::IO::BinaryWriter(file->BaseStream);
-
-	//		uint8_t arTemp[5 * 1024];
-	//		ampDetect >> arTemp;
-	//		array<uint8_t>^ protocolBuf = gcnew array<uint8_t>(ampDetect.GetStreamSize());
-	//		for (int i = 0; i < (int)ampDetect.GetStreamSize(); i++)
-	//			protocolBuf[i] = arTemp[i];
-
-	//		binFile->BaseStream->SetLength(0);
-	//		binFile->Write(protocolBuf);
-	//		binFile->Close();
-	//	}
-	//	WriteAmpDetectToGui(ampDetect);
-	//}
-
-	//private: System::Void WriteAmpDetectToGui(PcrProtocol& ampDetect)
-	//{
-	//	AmpDetectPage->ProtocolDataGrid->Rows->Clear();
-	//	AmpDetectPage->OpticalReadsGrid->Rows->Clear();
-
-	//	//Iterate through all optical reads in this protocol.
-	//	for (int i = 0; i < (int)ampDetect.GetNumOpticalReads(); i++)
-	//	{
-	//		DataGridViewRow^ row = gcnew DataGridViewRow;
-	//		OpticalReadsGrid->Rows->Add(row);
-	//		int nRowIdx = OpticalReadsGrid->RowCount - 1;
-	//		OpticalRead optRead = ampDetect.GetOpticalRead(i);
-
-	//		OpticalReadsGrid[0, nRowIdx]->Value = optRead.GetLedIdx();
-	//		OpticalReadsGrid[1, nRowIdx]->Value = optRead.GetLedIntensity();
-	//		OpticalReadsGrid[2, nRowIdx]->Value = optRead.GetLedStablizationTime();
-	//		OpticalReadsGrid[3, nRowIdx]->Value = optRead.GetDetectorIdx();
-	//		OpticalReadsGrid[4, nRowIdx]->Value = optRead.GetReferenceIdx();
-	//		OpticalReadsGrid[5, nRowIdx]->Value = optRead.GetDetectorIntegrationTime();
-	//	}
-
-	//	//Iterate through all segments in this protocol.
-	//	for (int nSegIdx = 0; nSegIdx < (int)ampDetect.GetNumSegs(); nSegIdx++)
-	//	{
-	//		Segment seg = ampDetect.GetSegment(nSegIdx);
-
-	//		//Iterate through all steps in this segment.
-	//		for (int nStepIdx = 0; nStepIdx < (int)seg.GetNumSteps(); nStepIdx++)
-	//		{
-	//			DataGridViewRow^ row = gcnew DataGridViewRow;
-	//			ProtocolDataGrid->Rows->Add(row);
-	//			int nRowIdx = ProtocolDataGrid->RowCount - 1;
-	//			Step step = seg.GetStep(nStepIdx);
-
-	//			//If this is the first step in the segment, report number of cycles.
-	//			if (nStepIdx == 0)
-	//				ProtocolDataGrid[0, nRowIdx]->Value = Convert::ToString(seg.GetNumCycles());
-
-	//			ProtocolDataGrid[1, nRowIdx]->Value = Convert::ToString(nStepIdx + 1);
-	//			ProtocolDataGrid[2, nRowIdx]->Value = Convert::ToString((double)step.GetTargetTemp() / 1000);
-	//			ProtocolDataGrid[3, nRowIdx]->Value = Convert::ToString((double)step.GetHoldTimer() / 1000);
-	//			ProtocolDataGrid[4, nRowIdx]->Value = Convert::ToString((double)step.GetRampRate() / 1000);
-
-	//			//Optical acquisition.
-	//			ProtocolDataGrid[5, nRowIdx]->Value = step.GetOpticalAcqFlg();
-
-	//			//Melt
-	//			ProtocolDataGrid[6, nRowIdx]->Value = step.GetMeltFlg();
-	//		}
-	//	}
-	//}
-
-	//private: System::Void ReadAmpDetectFromGui(PcrProtocol* pAmpDetect)
-	//{
-	//	pAmpDetect->Clear();
-
-	//	OpticalRead optRead;
-	//	pAmpDetect->SetFluorDetectorType(kPhotoDiode);
-	//	for (int nRowIdx = 0; nRowIdx < OpticalReadsGrid->Rows->Count; nRowIdx++)
-	//	{
-	//		optRead.SetLedIdx(Convert::ToInt32(OpticalReadsGrid[0, nRowIdx]->Value));
-	//		optRead.SetLedIntensity(Convert::ToInt32(OpticalReadsGrid[1, nRowIdx]->Value));
-	//		optRead.SetLedStablizationTime(Convert::ToInt32(OpticalReadsGrid[2, nRowIdx]->Value));
-	//		optRead.SetDetectorIdx(Convert::ToInt32(OpticalReadsGrid[3, nRowIdx]->Value));
-	//		optRead.SetReferenceIdx(Convert::ToInt32(OpticalReadsGrid[4, nRowIdx]->Value));
-	//		optRead.SetDetectorIntegrationTime(Convert::ToInt32(OpticalReadsGrid[5, nRowIdx]->Value));
-	//		pAmpDetect->AddOpticalRead(optRead);
-	//	}
-
-	//	Segment seg;
-	//	for (int nRowIdx = 0; nRowIdx < ProtocolDataGrid->Rows->Count; nRowIdx++)
-	//	{
-	//		int nNumCycles = Convert::ToInt32(ProtocolDataGrid[0, nRowIdx]->Value);
-	//		if ((nRowIdx == 0) && (!(nNumCycles > 0)))
-	//			nNumCycles = 1;
-
-	//		if (nNumCycles != 0)
-	//		{
-	//			seg.Clear();
-	//			seg.SetNumCycles(nNumCycles);
-	//		}
-
-	//		Step step;
-	//		step.SetTargetTemp((int32_t)(Convert::ToDouble(ProtocolDataGrid[2, nRowIdx]->Value) * 1000));
-	//		step.SetHoldTimer((uint32_t)(Convert::ToDouble(ProtocolDataGrid[3, nRowIdx]->Value) * 1000));
-	//		step.SetRampRate((int32_t)(Convert::ToDouble(ProtocolDataGrid[4, nRowIdx]->Value) * 1000));
-	//		step.SetOpticalAcqFlg(Convert::ToBoolean(((DataGridViewCheckBoxCell^)ProtocolDataGrid[5, nRowIdx])->Value) == true);
-	//		step.SetMeltFlg(Convert::ToBoolean(((DataGridViewCheckBoxCell^)ProtocolDataGrid[6, nRowIdx])->Value) == true);
-	//		seg.AddStep(step);
-
-	//		if ((nRowIdx >= ProtocolDataGrid->Rows->Count - 1) || (Convert::ToInt32(ProtocolDataGrid[0, nRowIdx + 1]->Value) > 0))
-	//			pAmpDetect->AddSegment(seg);
-	//	}
-	//}
-
-	//private: System::Void OpenProtocol_Click(System::Object^  sender, System::EventArgs^  e) 
-	//{
-	//	
-	//}
 
 	// Handle menu items being enabled and disabled based on tab
 	private: System::Void ProtocolTabs_TabIndexChanged(System::Object^  sender, System::EventArgs^  e)
@@ -463,5 +322,19 @@ namespace MDXProtocolEditor {
 	}
 
 	
-};
+	private: System::Void openProtocolDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		this->ampDetectPage1->OpenProtocol();
+	}
+
+	private: System::Void saveProtocolDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		this->ampDetectPage1->SaveProtocol();
+	}
+
+	private: System::Void closeDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		this->ampDetectPage1->ClearGrids();
+	}
+	};
 }
