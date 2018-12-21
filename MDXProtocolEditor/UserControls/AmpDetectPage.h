@@ -66,6 +66,12 @@ namespace UserControls {
 	private: System::Windows::Forms::Timer^  StatusTimer;
 	private: System::ComponentModel::IContainer^  components;
 	private: System::Windows::Forms::TextBox^  ProtocolName;
+	private: System::Windows::Forms::Button^  InsertAbovePhotodiode;
+
+	private: System::Windows::Forms::Button^  InsertAboveThermal;
+
+
+
 
 
 	// Handlers
@@ -97,6 +103,8 @@ namespace UserControls {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->thermalProfileGroupBox = (gcnew System::Windows::Forms::GroupBox());
+			this->InsertAboveThermal = (gcnew System::Windows::Forms::Button());
+			this->ProtocolName = (gcnew System::Windows::Forms::TextBox());
 			this->ProtocolDataGrid = (gcnew System::Windows::Forms::DataGridView());
 			this->Cycles = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Steps = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -108,6 +116,7 @@ namespace UserControls {
 			this->DeleteStep = (gcnew System::Windows::Forms::Button());
 			this->NewStep = (gcnew System::Windows::Forms::Button());
 			this->opticsGroupBox = (gcnew System::Windows::Forms::GroupBox());
+			this->InsertAbovePhotodiode = (gcnew System::Windows::Forms::Button());
 			this->OpticalReadsGrid = (gcnew System::Windows::Forms::DataGridView());
 			this->LEDIndex = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->LedIntensity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -123,7 +132,6 @@ namespace UserControls {
 			this->openProtocolDlg = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->SelectDataFolderDlg = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->StatusTimer = (gcnew System::Windows::Forms::Timer(this->components));
-			this->ProtocolName = (gcnew System::Windows::Forms::TextBox());
 			this->thermalProfileGroupBox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ProtocolDataGrid))->BeginInit();
 			this->opticsGroupBox->SuspendLayout();
@@ -132,6 +140,7 @@ namespace UserControls {
 			// 
 			// thermalProfileGroupBox
 			// 
+			this->thermalProfileGroupBox->Controls->Add(this->InsertAboveThermal);
 			this->thermalProfileGroupBox->Controls->Add(this->ProtocolName);
 			this->thermalProfileGroupBox->Controls->Add(this->ProtocolDataGrid);
 			this->thermalProfileGroupBox->Controls->Add(this->DeleteStep);
@@ -142,6 +151,24 @@ namespace UserControls {
 			this->thermalProfileGroupBox->TabIndex = 0;
 			this->thermalProfileGroupBox->TabStop = false;
 			this->thermalProfileGroupBox->Text = L"Thermal Profile";
+			// 
+			// InsertAboveThermal
+			// 
+			this->InsertAboveThermal->Location = System::Drawing::Point(9, 103);
+			this->InsertAboveThermal->Name = L"InsertAboveThermal";
+			this->InsertAboveThermal->Size = System::Drawing::Size(85, 23);
+			this->InsertAboveThermal->TabIndex = 17;
+			this->InsertAboveThermal->Text = L"Insert Above";
+			this->InsertAboveThermal->UseVisualStyleBackColor = true;
+			this->InsertAboveThermal->Click += gcnew System::EventHandler(this, &AmpDetectPage::InsertAboveThermal_Click);
+			// 
+			// ProtocolName
+			// 
+			this->ProtocolName->Location = System::Drawing::Point(613, 22);
+			this->ProtocolName->Name = L"ProtocolName";
+			this->ProtocolName->Size = System::Drawing::Size(100, 20);
+			this->ProtocolName->TabIndex = 11;
+			this->ProtocolName->Visible = false;
 			// 
 			// ProtocolDataGrid
 			// 
@@ -156,11 +183,11 @@ namespace UserControls {
 				this->Cycles,
 					this->Steps, this->Setpoint, this->Time, this->RampRate, this->OpticalAcq, this->Melt
 			});
-			this->ProtocolDataGrid->Location = System::Drawing::Point(17, 47);
+			this->ProtocolDataGrid->Location = System::Drawing::Point(106, 47);
 			this->ProtocolDataGrid->Margin = System::Windows::Forms::Padding(2);
 			this->ProtocolDataGrid->Name = L"ProtocolDataGrid";
 			this->ProtocolDataGrid->RowTemplate->Height = 24;
-			this->ProtocolDataGrid->Size = System::Drawing::Size(852, 261);
+			this->ProtocolDataGrid->Size = System::Drawing::Size(763, 261);
 			this->ProtocolDataGrid->TabIndex = 10;
 			// 
 			// Cycles
@@ -226,10 +253,10 @@ namespace UserControls {
 			// 
 			// DeleteStep
 			// 
-			this->DeleteStep->Location = System::Drawing::Point(97, 20);
+			this->DeleteStep->Location = System::Drawing::Point(9, 75);
 			this->DeleteStep->Margin = System::Windows::Forms::Padding(2);
 			this->DeleteStep->Name = L"DeleteStep";
-			this->DeleteStep->Size = System::Drawing::Size(75, 23);
+			this->DeleteStep->Size = System::Drawing::Size(85, 23);
 			this->DeleteStep->TabIndex = 9;
 			this->DeleteStep->Text = L"Delete Step";
 			this->DeleteStep->UseVisualStyleBackColor = true;
@@ -237,9 +264,9 @@ namespace UserControls {
 			// 
 			// NewStep
 			// 
-			this->NewStep->Location = System::Drawing::Point(17, 20);
+			this->NewStep->Location = System::Drawing::Point(9, 47);
 			this->NewStep->Name = L"NewStep";
-			this->NewStep->Size = System::Drawing::Size(75, 23);
+			this->NewStep->Size = System::Drawing::Size(85, 23);
 			this->NewStep->TabIndex = 0;
 			this->NewStep->Text = L"New Step";
 			this->NewStep->UseVisualStyleBackColor = true;
@@ -247,6 +274,7 @@ namespace UserControls {
 			// 
 			// opticsGroupBox
 			// 
+			this->opticsGroupBox->Controls->Add(this->InsertAbovePhotodiode);
 			this->opticsGroupBox->Controls->Add(this->OpticalReadsGrid);
 			this->opticsGroupBox->Controls->Add(this->label7);
 			this->opticsGroupBox->Controls->Add(this->DelOptReadBtn);
@@ -258,6 +286,16 @@ namespace UserControls {
 			this->opticsGroupBox->TabIndex = 1;
 			this->opticsGroupBox->TabStop = false;
 			this->opticsGroupBox->Text = L"Optics";
+			// 
+			// InsertAbovePhotodiode
+			// 
+			this->InsertAbovePhotodiode->Location = System::Drawing::Point(9, 100);
+			this->InsertAbovePhotodiode->Name = L"InsertAbovePhotodiode";
+			this->InsertAbovePhotodiode->Size = System::Drawing::Size(85, 23);
+			this->InsertAbovePhotodiode->TabIndex = 16;
+			this->InsertAbovePhotodiode->Text = L"Insert Above";
+			this->InsertAbovePhotodiode->UseVisualStyleBackColor = true;
+			this->InsertAbovePhotodiode->Click += gcnew System::EventHandler(this, &AmpDetectPage::InsertAbovePhotodiode_Click);
 			// 
 			// OpticalReadsGrid
 			// 
@@ -317,7 +355,7 @@ namespace UserControls {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(146, 20);
+			this->label7->Location = System::Drawing::Point(103, 30);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(72, 13);
 			this->label7->TabIndex = 14;
@@ -325,7 +363,7 @@ namespace UserControls {
 			// 
 			// DelOptReadBtn
 			// 
-			this->DelOptReadBtn->Location = System::Drawing::Point(5, 72);
+			this->DelOptReadBtn->Location = System::Drawing::Point(7, 72);
 			this->DelOptReadBtn->Margin = System::Windows::Forms::Padding(2);
 			this->DelOptReadBtn->Name = L"DelOptReadBtn";
 			this->DelOptReadBtn->Size = System::Drawing::Size(87, 23);
@@ -345,7 +383,7 @@ namespace UserControls {
 			// 
 			// AddOptReadBtn
 			// 
-			this->AddOptReadBtn->Location = System::Drawing::Point(5, 45);
+			this->AddOptReadBtn->Location = System::Drawing::Point(7, 45);
 			this->AddOptReadBtn->Margin = System::Windows::Forms::Padding(2);
 			this->AddOptReadBtn->Name = L"AddOptReadBtn";
 			this->AddOptReadBtn->Size = System::Drawing::Size(87, 23);
@@ -361,14 +399,6 @@ namespace UserControls {
 			// StatusTimer
 			// 
 			this->StatusTimer->Enabled = true;
-			// 
-			// ProtocolName
-			// 
-			this->ProtocolName->Location = System::Drawing::Point(613, 22);
-			this->ProtocolName->Name = L"ProtocolName";
-			this->ProtocolName->Size = System::Drawing::Size(100, 20);
-			this->ProtocolName->TabIndex = 11;
-			this->ProtocolName->Visible = false;
 			// 
 			// AmpDetectPage
 			// 
@@ -580,6 +610,42 @@ namespace UserControls {
 
 			if ((nRowIdx >= ProtocolDataGrid->Rows->Count - 1) || (Convert::ToInt32(ProtocolDataGrid[0, nRowIdx + 1]->Value) > 0))
 				pAmpDetect->AddSegment(seg);
+		}
+	}
+
+	private: System::Void InsertAbovePhotodiode_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		if (OpticalReadsGrid->Rows->Count == 0) 
+		{
+			return;
+		}
+
+		DataGridViewRow^ row = gcnew DataGridViewRow;
+		for (int currentRowIndex = 0; currentRowIndex < OpticalReadsGrid->Rows->Count; currentRowIndex++)
+		{
+			if (OpticalReadsGrid->Rows[currentRowIndex]->Selected)
+			{
+				OpticalReadsGrid->Rows->Insert(currentRowIndex);
+				break;
+			}
+		}
+	}
+
+	private: System::Void InsertAboveThermal_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		if (ProtocolDataGrid->Rows->Count == 0)
+		{
+			return;
+		}
+
+		DataGridViewRow^ row = gcnew DataGridViewRow;
+		for (int currentRowIndex = 0; currentRowIndex < ProtocolDataGrid->Rows->Count; currentRowIndex++)
+		{
+			if (ProtocolDataGrid->Rows[currentRowIndex]->Selected)
+			{
+				ProtocolDataGrid->Rows->Insert(currentRowIndex);
+				break;
+			}
 		}
 	}
 };

@@ -19,6 +19,13 @@ private: PcrProtocol* pcrProtocol;
 			samplePrepProtocol = new SamplePrepProtocol();
 		};
 
+		~MdxProtocol() 
+		{
+			delete pcrProtocol;
+			delete mixingProtocol;
+			delete samplePrepProtocol;
+		}
+
 		PcrProtocol* GetPcrProtocol() 
 		{
 			return pcrProtocol;
