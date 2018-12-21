@@ -483,7 +483,6 @@ namespace UserControls {
 
 			PcrProtocol ampDetect;
 			ampDetect << arTemp;
-			ampDetectProtocol->UpdatePcrProtocol(ampDetect);
 			WriteAmpDetectToGui(ampDetect);
 			binFile->Close();
 		}
@@ -550,7 +549,6 @@ namespace UserControls {
 
 		PcrProtocol ampDetect;
 		ReadAmpDetectFromGui(&ampDetect);
-		ampDetectProtocol->UpdatePcrProtocol(ampDetect);
 		if (saveProtocolDlg->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 		{
 			ProtocolName->Text = saveProtocolDlg->FileName;

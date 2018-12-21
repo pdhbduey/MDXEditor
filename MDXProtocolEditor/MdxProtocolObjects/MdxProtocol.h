@@ -7,53 +7,28 @@
 
 class MdxProtocol
 {
-private: PcrProtocol* pcrProtocol;
-		 MixingProtocol* mixingProtocol;
-		 SamplePrepProtocol* samplePrepProtocol;
+	private: 
+		PcrProtocol pcrProtocol;
+		MixingProtocol mixingProtocol;
+		SamplePrepProtocol samplePrepProtocol;
 
 	public:
 		MdxProtocol()
 		{
-			pcrProtocol = new PcrProtocol();
-			mixingProtocol = new MixingProtocol();
-			samplePrepProtocol = new SamplePrepProtocol();
 		};
 
 		~MdxProtocol() 
 		{
-			delete pcrProtocol;
-			delete mixingProtocol;
-			delete samplePrepProtocol;
 		}
 
 		PcrProtocol* GetPcrProtocol() 
 		{
-			return pcrProtocol;
+			return &pcrProtocol;
 		}
 
-		void UpdatePcrProtocol(PcrProtocol newPcrProtocol)
+		void SetPcrProtocol(PcrProtocol& newPcrProtocol)
 		{
-			pcrProtocol = &newPcrProtocol;
-		}
-
-		MixingProtocol* GetMixingProtocol()
-		{
-			return mixingProtocol;
-		}
-
-		void UpdateMixingProtocol(MixingProtocol newMixingProtocol)
-		{
-			mixingProtocol = &newMixingProtocol;
-		}
-
-		SamplePrepProtocol* GetSamplePrepProtocol()
-		{
-			return samplePrepProtocol;
-		}
-
-		void UpdateSamplePrepProtocol(SamplePrepProtocol newSamplePrepProtocol)
-		{
-			samplePrepProtocol = &newSamplePrepProtocol;
+			pcrProtocol = newPcrProtocol;
 		}
 };
 
