@@ -8,9 +8,9 @@
 class MdxProtocol
 {
 	private: 
-		PcrProtocol pcrProtocol;
-		MixingProtocol mixingProtocol;
-		SamplePrepProtocol samplePrepProtocol;
+		PcrProtocol _pcrProtocol;
+		MixingProtocol _mixingProtocol;
+		SamplePrepProtocol _samplePrepProtocol;
 
 	public:
 		MdxProtocol()
@@ -23,12 +23,12 @@ class MdxProtocol
 
 		PcrProtocol* GetPcrProtocol() 
 		{
-			return &pcrProtocol;
+			return &_pcrProtocol;
 		}
 
 		void SetPcrProtocol(PcrProtocol& newPcrProtocol)
 		{
-			pcrProtocol = newPcrProtocol;
+			_pcrProtocol = newPcrProtocol;
 		}
 };
 
