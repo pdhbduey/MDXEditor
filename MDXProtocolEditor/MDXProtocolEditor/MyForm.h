@@ -161,7 +161,7 @@ namespace MDXProtocolEditor {
 			this->ProtocolTabs->Margin = System::Windows::Forms::Padding(2);
 			this->ProtocolTabs->Name = L"ProtocolTabs";
 			this->ProtocolTabs->SelectedIndex = 0;
-			this->ProtocolTabs->Size = System::Drawing::Size(894, 639);
+			this->ProtocolTabs->Size = System::Drawing::Size(1119, 639);
 			this->ProtocolTabs->TabIndex = 0;
 			this->ProtocolTabs->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::ProtocolTabs_TabIndexChanged);
 			this->ProtocolTabs->TabIndexChanged += gcnew System::EventHandler(this, &MyForm::ProtocolTabs_TabIndexChanged);
@@ -211,15 +211,15 @@ namespace MDXProtocolEditor {
 			this->AmpDetectPage->Margin = System::Windows::Forms::Padding(2);
 			this->AmpDetectPage->Name = L"AmpDetectPage";
 			this->AmpDetectPage->Padding = System::Windows::Forms::Padding(2);
-			this->AmpDetectPage->Size = System::Drawing::Size(886, 613);
+			this->AmpDetectPage->Size = System::Drawing::Size(1111, 613);
 			this->AmpDetectPage->TabIndex = 0;
 			this->AmpDetectPage->Text = L"Amp Detect";
 			// 
 			// ampDetectPage1
 			// 
-			this->ampDetectPage1->Location = System::Drawing::Point(4, 4);
+			this->ampDetectPage1->Location = System::Drawing::Point(0, 0);
 			this->ampDetectPage1->Name = L"ampDetectPage1";
-			this->ampDetectPage1->Size = System::Drawing::Size(901, 666);
+			this->ampDetectPage1->Size = System::Drawing::Size(1113, 666);
 			this->ampDetectPage1->TabIndex = 0;
 			// 
 			// menuStrip1
@@ -228,7 +228,7 @@ namespace MDXProtocolEditor {
 			this->menuStrip1->Location = System::Drawing::Point(0, 24);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(4, 2, 0, 2);
-			this->menuStrip1->Size = System::Drawing::Size(904, 24);
+			this->menuStrip1->Size = System::Drawing::Size(1127, 24);
 			this->menuStrip1->TabIndex = 1;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -239,7 +239,7 @@ namespace MDXProtocolEditor {
 			this->menuStrip2->Location = System::Drawing::Point(0, 0);
 			this->menuStrip2->Name = L"menuStrip2";
 			this->menuStrip2->Padding = System::Windows::Forms::Padding(4, 2, 0, 2);
-			this->menuStrip2->Size = System::Drawing::Size(904, 24);
+			this->menuStrip2->Size = System::Drawing::Size(1127, 24);
 			this->menuStrip2->TabIndex = 2;
 			this->menuStrip2->Text = L"menuStrip2";
 			// 
@@ -257,7 +257,7 @@ namespace MDXProtocolEditor {
 			// 
 			this->openProtocolDropdown->Enabled = false;
 			this->openProtocolDropdown->Name = L"openProtocolDropdown";
-			this->openProtocolDropdown->Size = System::Drawing::Size(180, 22);
+			this->openProtocolDropdown->Size = System::Drawing::Size(114, 22);
 			this->openProtocolDropdown->Text = L"Open ";
 			this->openProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::openProtocolDropdown_Click);
 			// 
@@ -265,14 +265,14 @@ namespace MDXProtocolEditor {
 			// 
 			this->saveProtocolDropdown->Enabled = false;
 			this->saveProtocolDropdown->Name = L"saveProtocolDropdown";
-			this->saveProtocolDropdown->Size = System::Drawing::Size(180, 22);
+			this->saveProtocolDropdown->Size = System::Drawing::Size(114, 22);
 			this->saveProtocolDropdown->Text = L"Save As";
 			this->saveProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::saveProtocolDropdown_Click);
 			// 
 			// closeDropdown
 			// 
 			this->closeDropdown->Name = L"closeDropdown";
-			this->closeDropdown->Size = System::Drawing::Size(180, 22);
+			this->closeDropdown->Size = System::Drawing::Size(114, 22);
 			this->closeDropdown->Text = L"Close";
 			this->closeDropdown->Click += gcnew System::EventHandler(this, &MyForm::closeDropdown_Click);
 			// 
@@ -280,7 +280,7 @@ namespace MDXProtocolEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(904, 648);
+			this->ClientSize = System::Drawing::Size(1127, 648);
 			this->Controls->Add(this->ProtocolTabs);
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->menuStrip2);
