@@ -134,6 +134,9 @@
     <ClInclude Include="AmpDetectPage.h">
       <FileType>CppControl</FileType>
     </ClInclude>
+    <ClInclude Include="LabwarePage.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="MixingStationPage.h">
       <FileType>CppControl</FileType>
     </ClInclude>
@@ -147,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="AmpDetectPage.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="LabwarePage.cpp" />
     <ClCompile Include="MixingStationPage.cpp" />
     <ClCompile Include="SamplePrepPage.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -173,6 +177,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AmpDetectPage.resx">
       <DependentUpon>AmpDetectPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabwarePage.resx">
+      <DependentUpon>LabwarePage.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MixingStationPage.resx">
       <DependentUpon>MixingStationPage.h</DependentUpon>
