@@ -385,11 +385,12 @@ namespace UserControls {
 
 	public: System::Void ClearGrids()
 	{
+		ProtocolName->Text = "";
 		ProtocolDataGrid->Rows->Clear();
 		OpticalReadsGrid->Rows->Clear();
 	}
 
-	public: System::Void OpenProtocol()
+	public: System::Boolean OpenProtocol()
 	{
 		ProtocolDataGrid->Rows->Clear();
 		OpticalReadsGrid->Rows->Clear();
@@ -413,7 +414,10 @@ namespace UserControls {
 			_ampDetect << arTemp;
 			WriteAmpDetectToGui(_ampDetect);
 			binFile->Close();
+			return true;
 		}
+
+		return false;
 	}
 
 	private: System::Void WriteAmpDetectToGui(PcrProtocol& ampDetect)
@@ -468,7 +472,7 @@ namespace UserControls {
 		}
 	}
 
-	public: System::Void SaveProtocol()
+	public: System::Boolean SaveAsProtocol()
 	{
 		saveProtocolDlg->FileName = ProtocolName->Text;
 		saveProtocolDlg->AddExtension = true;
@@ -492,7 +496,31 @@ namespace UserControls {
 			binFile->BaseStream->SetLength(0);
 			binFile->Write(protocolBuf);
 			binFile->Close();
+			return true;
 		}
+
+		WriteAmpDetectToGui(ampDetect);
+		return false;
+	}
+
+	public: System::Void SaveProtocol()
+	{
+		PcrProtocol ampDetect;
+		ReadAmpDetectFromGui(&ampDetect);
+		
+		System::IO::StreamWriter^ file = gcnew System::IO::StreamWriter(ProtocolName->Text);
+		System::IO::BinaryWriter^ binFile = gcnew System::IO::BinaryWriter(file->BaseStream);
+
+		uint8_t arTemp[5 * 1024];
+		ampDetect >> arTemp;
+		array<uint8_t>^ protocolBuf = gcnew array<uint8_t>(ampDetect.GetStreamSize());
+		for (int i = 0; i < (int)ampDetect.GetStreamSize(); i++)
+			protocolBuf[i] = arTemp[i];
+
+		binFile->BaseStream->SetLength(0);
+		binFile->Write(protocolBuf);
+		binFile->Close();
+		
 		WriteAmpDetectToGui(ampDetect);
 	}
 
