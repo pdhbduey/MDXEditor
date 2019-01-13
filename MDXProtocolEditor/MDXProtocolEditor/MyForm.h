@@ -112,11 +112,20 @@ namespace MDXProtocolEditor {
 	private: System::Windows::Forms::MenuStrip^  menuStrip2;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileMenuDropdown;
 	private: System::Windows::Forms::ToolStripMenuItem^  openProtocolDropdown;
-	private: System::Windows::Forms::ToolStripMenuItem^  saveProtocolDropdown;
+	private: System::Windows::Forms::ToolStripMenuItem^  saveAsProtocolDropdown;
+
 	private: System::Windows::Forms::ToolStripMenuItem^  closeDropdown;
 	private: UserControls::AmpDetectPage^  ampDetectPage1;
 	private: UserControls::MixingStationPage^  mixingStationPage1;
 	private: UserControls::SamplePrepPage^  samplePrepPage1;
+	private: System::Windows::Forms::TabPage^  LabwarePage;
+	private: UserControls::LabwarePage^  labwarePage1;
+	private: System::Windows::Forms::ToolStripMenuItem^  saveProtocolDropdown;
+
+
+
+	private: System::Windows::Forms::ToolStripMenuItem^  helpToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  aboutMDXProtocolEditorToolStripMenuItem;
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -139,16 +148,22 @@ namespace MDXProtocolEditor {
 			this->mixingStationPage1 = (gcnew UserControls::MixingStationPage());
 			this->AmpDetectPage = (gcnew System::Windows::Forms::TabPage());
 			this->ampDetectPage1 = (gcnew UserControls::AmpDetectPage());
+			this->LabwarePage = (gcnew System::Windows::Forms::TabPage());
+			this->labwarePage1 = (gcnew UserControls::LabwarePage());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileMenuDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveAsProtocolDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->closeDropdown = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->helpToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->aboutMDXProtocolEditorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->ProtocolTabs->SuspendLayout();
 			this->SamplePrepPage->SuspendLayout();
 			this->MixingStationPage->SuspendLayout();
 			this->AmpDetectPage->SuspendLayout();
+			this->LabwarePage->SuspendLayout();
 			this->menuStrip2->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -157,6 +172,7 @@ namespace MDXProtocolEditor {
 			this->ProtocolTabs->Controls->Add(this->SamplePrepPage);
 			this->ProtocolTabs->Controls->Add(this->MixingStationPage);
 			this->ProtocolTabs->Controls->Add(this->AmpDetectPage);
+			this->ProtocolTabs->Controls->Add(this->LabwarePage);
 			this->ProtocolTabs->Location = System::Drawing::Point(9, 39);
 			this->ProtocolTabs->Margin = System::Windows::Forms::Padding(2);
 			this->ProtocolTabs->Name = L"ProtocolTabs";
@@ -172,7 +188,7 @@ namespace MDXProtocolEditor {
 			this->SamplePrepPage->Location = System::Drawing::Point(4, 22);
 			this->SamplePrepPage->Margin = System::Windows::Forms::Padding(2);
 			this->SamplePrepPage->Name = L"SamplePrepPage";
-			this->SamplePrepPage->Size = System::Drawing::Size(886, 613);
+			this->SamplePrepPage->Size = System::Drawing::Size(1111, 613);
 			this->SamplePrepPage->TabIndex = 2;
 			this->SamplePrepPage->Text = L"Sample Prep";
 			this->SamplePrepPage->UseVisualStyleBackColor = true;
@@ -191,7 +207,7 @@ namespace MDXProtocolEditor {
 			this->MixingStationPage->Margin = System::Windows::Forms::Padding(2);
 			this->MixingStationPage->Name = L"MixingStationPage";
 			this->MixingStationPage->Padding = System::Windows::Forms::Padding(2);
-			this->MixingStationPage->Size = System::Drawing::Size(886, 613);
+			this->MixingStationPage->Size = System::Drawing::Size(1111, 613);
 			this->MixingStationPage->TabIndex = 1;
 			this->MixingStationPage->Text = L"Mixing Station";
 			this->MixingStationPage->UseVisualStyleBackColor = true;
@@ -222,6 +238,23 @@ namespace MDXProtocolEditor {
 			this->ampDetectPage1->Size = System::Drawing::Size(1113, 666);
 			this->ampDetectPage1->TabIndex = 0;
 			// 
+			// LabwarePage
+			// 
+			this->LabwarePage->Controls->Add(this->labwarePage1);
+			this->LabwarePage->Location = System::Drawing::Point(4, 22);
+			this->LabwarePage->Name = L"LabwarePage";
+			this->LabwarePage->Size = System::Drawing::Size(1111, 613);
+			this->LabwarePage->TabIndex = 3;
+			this->LabwarePage->Text = L"Labware";
+			this->LabwarePage->UseVisualStyleBackColor = true;
+			// 
+			// labwarePage1
+			// 
+			this->labwarePage1->Location = System::Drawing::Point(15, 20);
+			this->labwarePage1->Name = L"labwarePage1";
+			this->labwarePage1->Size = System::Drawing::Size(150, 150);
+			this->labwarePage1->TabIndex = 0;
+			// 
 			// menuStrip1
 			// 
 			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
@@ -235,7 +268,10 @@ namespace MDXProtocolEditor {
 			// menuStrip2
 			// 
 			this->menuStrip2->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->fileMenuDropdown });
+			this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->fileMenuDropdown,
+					this->helpToolStripMenuItem
+			});
 			this->menuStrip2->Location = System::Drawing::Point(0, 0);
 			this->menuStrip2->Name = L"menuStrip2";
 			this->menuStrip2->Padding = System::Windows::Forms::Padding(4, 2, 0, 2);
@@ -245,9 +281,9 @@ namespace MDXProtocolEditor {
 			// 
 			// fileMenuDropdown
 			// 
-			this->fileMenuDropdown->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->fileMenuDropdown->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
 				this->openProtocolDropdown,
-					this->saveProtocolDropdown, this->closeDropdown
+					this->saveProtocolDropdown, this->saveAsProtocolDropdown, this->closeDropdown
 			});
 			this->fileMenuDropdown->Name = L"fileMenuDropdown";
 			this->fileMenuDropdown->Size = System::Drawing::Size(37, 20);
@@ -257,7 +293,7 @@ namespace MDXProtocolEditor {
 			// 
 			this->openProtocolDropdown->Enabled = false;
 			this->openProtocolDropdown->Name = L"openProtocolDropdown";
-			this->openProtocolDropdown->Size = System::Drawing::Size(114, 22);
+			this->openProtocolDropdown->Size = System::Drawing::Size(180, 22);
 			this->openProtocolDropdown->Text = L"Open ";
 			this->openProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::openProtocolDropdown_Click);
 			// 
@@ -265,16 +301,38 @@ namespace MDXProtocolEditor {
 			// 
 			this->saveProtocolDropdown->Enabled = false;
 			this->saveProtocolDropdown->Name = L"saveProtocolDropdown";
-			this->saveProtocolDropdown->Size = System::Drawing::Size(114, 22);
-			this->saveProtocolDropdown->Text = L"Save As";
-			this->saveProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::saveProtocolDropdown_Click);
+			this->saveProtocolDropdown->Size = System::Drawing::Size(180, 22);
+			this->saveProtocolDropdown->Text = L"Save";
+			this->saveProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::saveToolStripMenuItem_Click);
+			// 
+			// saveAsProtocolDropdown
+			// 
+			this->saveAsProtocolDropdown->Enabled = false;
+			this->saveAsProtocolDropdown->Name = L"saveAsProtocolDropdown";
+			this->saveAsProtocolDropdown->Size = System::Drawing::Size(180, 22);
+			this->saveAsProtocolDropdown->Text = L"Save As";
+			this->saveAsProtocolDropdown->Click += gcnew System::EventHandler(this, &MyForm::saveAsProtocolDropdown_Click);
 			// 
 			// closeDropdown
 			// 
 			this->closeDropdown->Name = L"closeDropdown";
-			this->closeDropdown->Size = System::Drawing::Size(114, 22);
+			this->closeDropdown->Size = System::Drawing::Size(180, 22);
 			this->closeDropdown->Text = L"Close";
 			this->closeDropdown->Click += gcnew System::EventHandler(this, &MyForm::closeDropdown_Click);
+			// 
+			// helpToolStripMenuItem
+			// 
+			this->helpToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->aboutMDXProtocolEditorToolStripMenuItem });
+			this->helpToolStripMenuItem->Name = L"helpToolStripMenuItem";
+			this->helpToolStripMenuItem->Size = System::Drawing::Size(44, 20);
+			this->helpToolStripMenuItem->Text = L"Help";
+			// 
+			// aboutMDXProtocolEditorToolStripMenuItem
+			// 
+			this->aboutMDXProtocolEditorToolStripMenuItem->Name = L"aboutMDXProtocolEditorToolStripMenuItem";
+			this->aboutMDXProtocolEditorToolStripMenuItem->Size = System::Drawing::Size(218, 22);
+			this->aboutMDXProtocolEditorToolStripMenuItem->Text = L"About MDX Protocol Editor";
+			this->aboutMDXProtocolEditorToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::aboutMDXProtocolEditorToolStripMenuItem_Click);
 			// 
 			// MyForm
 			// 
@@ -293,6 +351,7 @@ namespace MDXProtocolEditor {
 			this->SamplePrepPage->ResumeLayout(false);
 			this->MixingStationPage->ResumeLayout(false);
 			this->AmpDetectPage->ResumeLayout(false);
+			this->LabwarePage->ResumeLayout(false);
 			this->menuStrip2->ResumeLayout(false);
 			this->menuStrip2->PerformLayout();
 			this->ResumeLayout(false);
@@ -310,12 +369,14 @@ namespace MDXProtocolEditor {
 		if (ProtocolTabs->SelectedTab->Name == "AmpDetectPage")
 		{
 			openProtocolDropdown->Enabled = true;
-			saveProtocolDropdown->Enabled = true;
+			saveAsProtocolDropdown->Enabled = true;
+			saveProtocolDropdown->Enabled = false;
 			closeDropdown->Enabled = true;
 		}
 		else 
 		{
 			openProtocolDropdown->Enabled = false;
+			saveAsProtocolDropdown->Enabled = true;
 			saveProtocolDropdown->Enabled = false;
 			closeDropdown->Enabled = false;
 		}
@@ -324,17 +385,37 @@ namespace MDXProtocolEditor {
 	
 	private: System::Void openProtocolDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
-		this->ampDetectPage1->OpenProtocol();
-	}
-
-	private: System::Void saveProtocolDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
-	{
-		this->ampDetectPage1->SaveProtocol();
+		Boolean wasSaved = this->ampDetectPage1->OpenProtocol();
+		if (wasSaved)
+		{
+			saveProtocolDropdown->Enabled = true;
+		}
 	}
 
 	private: System::Void closeDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
+		saveProtocolDropdown->Enabled = false;
 		this->ampDetectPage1->ClearGrids();
 	}
-	};
+
+	private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		this->ampDetectPage1->SaveProtocol();
+	}
+
+	private: System::Void saveAsProtocolDropdown_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		Boolean wasSaved = this->ampDetectPage1->SaveAsProtocol();
+		if (wasSaved)
+		{
+			saveProtocolDropdown->Enabled = true;
+		}
+	}
+
+	private: System::Void aboutMDXProtocolEditorToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		Form^ helpForm = gcnew UserControls::HelpMenu();
+		helpForm->Show();
+	}
+};
 }
